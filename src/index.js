@@ -11,8 +11,8 @@ import "./style.css";
         const mx = window.innerWidth / 2;
         const my = window.innerHeight / 2;
 
-        const ox = ((x - mx) / mx) * 45;
-        const oy = ((y - my) / my) * 45;
+        const ox = ((x - mx) / mx) * 90;
+        const oy = ((y - my) / my) * 90;
 
         container.style.setProperty("--ry", oy + "deg");
         container.style.setProperty("--rx", ox + "deg");
