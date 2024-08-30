@@ -18,4 +18,9 @@ import "./style.css";
         container.style.setProperty("--rx", oy + "deg");
 
     });
+
+    section.addEventListener('mouseout', () => {
+        container.style.setProperty("--ry", "0deg");
+        container.style.setProperty("--rx", "0deg");
+    });
 })();
