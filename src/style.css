@@ -1,0 +1,79 @@
+:root {
+    --rx: 0deg;
+    --ry: 0deg;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+body {
+    background-color: beige;
+}
+
+.container {
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px 3px black;
+    width: 900px;
+    height: 600px;
+    border: 2px solid black;
+    background-color: white;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-style: preserve-3d;
+    transform: translate(-50%, -50%) perspective(5000px) rotateY(var(--ry)) rotateX(var(--rx));
+    transition: all 0.5s;
+    display: grid;
+    grid-template-columns: 1fr repeat(4, 1fr);
+}
+
+ul {
+    list-style-type: none;
+}
+
+aside {
+    grid-column: 1;
+    border-right: 2px solid black;
+}
+
+section {
+    grid-column: 2 / -1;
+}
+
+li {
+    font-size: 32px;
+    border-bottom: 2px solid black;
+    padding: 8px 24px;
+    transition: all 0.5s;
+}
+
+li:not(.no-hover):hover {
+    transform: translate3d(3px 3px 3px);
+    box-shadow: 2px 2px 2px 1px black;
+}
+
+li:hover button {
+    transform: rotate(-5deg);
+    text-shadow: 2px 2px white;
+    font-weight: bold;
+}
+
+ul > li:last-child {
+    border-bottom: none;
+}
+
+button {
+    border: none;
+    background: none;
+    font-size: 32px;
+    transition: all 0.5s;
+}
+
+.projects button {
+    font-size: 24px;
+}
