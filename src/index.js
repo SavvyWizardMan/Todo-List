@@ -15,7 +15,7 @@ import "./style.css";
         const oy = ((y - my) / my) * 45;
 
         container.style.setProperty("--ry", ox + "deg");
-        container.style.setProperty("--rx", oy + "deg");
+        container.style.setProperty("--rx", -oy + "deg");
 
     });
 

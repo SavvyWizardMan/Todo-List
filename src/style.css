@@ -27,6 +27,7 @@ body {
     left: 50%;
     transform-style: preserve-3d;
     transform: translate(-50%, -50%) perspective(5000px) rotateY(var(--ry)) rotateX(var(--rx));
+    transition: all 0.5s;
     display: grid;
     grid-template-columns: 1fr repeat(4, 1fr);
 }
