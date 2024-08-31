@@ -1,5 +1,7 @@
 import "./style.css";
-import "./domscript";
+import createTask from "./application";
+import createProject from "./application";
+import createNote from "./application";
 
 (function() {
     const container = document.querySelector('.container');
@@ -16,6 +18,7 @@ import "./domscript";
     const radio3 = document.querySelector('input[id="low"]');
     const inputs = [title, desc];
     const radios = [radio1, radio2, radio3];
+    let priority = "";
 
     addTask.addEventListener('click', () => {
         for (let i of inputs) {
@@ -24,6 +27,7 @@ import "./domscript";
         let isChecked = false;
         for (let j of radios) {
             if (j.checked) {
+                priority = j;
                 isChecked = true;
                 break;
             }      
@@ -32,6 +36,9 @@ import "./domscript";
         if (!isChecked) {
             return;
         }
+
+        const i = new createTask(title, desc, date, true);
+        i.display(section);
 
         title.value = "";
         desc.value = "";
@@ -42,14 +49,21 @@ import "./domscript";
     });
     
     section.addEventListener('mousemove', (e) => {
+        container.classList.remove('toggle');
         const x = e.clientX;
         const y = e.clientY;
 
+        //center of section element
+        const inx = section.clientWidth / 2;
+        const inh = section.clientHeight / 2;
+
+        //center of window
         const mx = window.innerWidth / 2;
         const my = window.innerHeight / 2;
 
-        const ox = ((x - mx) / mx) * 45;
-        const oy = ((y - my) / my) * 45;
+        //offset
+        const ox = ((x - inx) / mx) * 30;
+        const oy = ((y - inh) / my) * 15;
 
         container.style.setProperty("--ry", ox + "deg");
         container.style.setProperty("--rx", -oy + "deg");
@@ -57,6 +71,7 @@ import "./domscript";
     });
 
     section.addEventListener('mouseout', () => {
+        container.classList.add('toggle');
         container.style.setProperty("--ry", "0deg");
         container.style.setProperty("--rx", "0deg");
     });

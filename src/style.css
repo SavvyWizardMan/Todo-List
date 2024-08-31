@@ -14,6 +14,15 @@ body {
     background-color: beige;
 }
 
+h1 {
+    top: 0;
+    padding: 8px;
+    margin: auto;
+    width: fit-content;
+    left: 150px;
+    position: absolute;
+}
+
 .container {
     border-radius: 10px;
     box-shadow: 3px 3px 3px 3px black;
@@ -27,9 +36,12 @@ body {
     left: 50%;
     transform-style: preserve-3d;
     transform: translate(-50%, -50%) perspective(5000px) rotateY(var(--ry)) rotateX(var(--rx));
-    transition: all 0.1s ease-in-out;
     display: grid;
     grid-template-columns: 1fr repeat(4, 1fr);
+}
+
+.toggle {
+    transition: all 0.5s;
 }
 
 ul {
@@ -37,11 +49,26 @@ ul {
     position: relative;
 }
 
+dialog[open] {
+    transform: scale(1);
+    opacity: 1;
+}
+
 dialog {
     width: 500px;
     height: 500px;
     margin: auto;
     overflow: hidden;
+    transform: scale(0);
+    opacity: 0;
+    transition: all 0.5s allow-discrete;
+}
+
+@starting-style {
+    dialog[open] {
+        opacity: 0;
+        transform: scale(0);
+    }
 }
 
 form {
@@ -89,6 +116,11 @@ input[type="radio"] {
 }
 
 ::backdrop {
+    transition: all 0.5s allow-discrete;
+    opacity: 0;
+}
+
+dialog[open]::backdrop {
     background-image: linear-gradient(
         135deg,
         green,
@@ -99,6 +131,12 @@ input[type="radio"] {
     opacity: 0.75;
 }
 
+@starting-style {
+    dialog[open]::backdrop {
+        opacity: 0;
+    }
+}
+
 aside {
     grid-column: 1;
     border-right: 2px solid black;
@@ -106,6 +144,14 @@ aside {
 
 section {
     grid-column: 2 / -1;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 200px;
+    column-gap: 67px;
+    row-gap: 20px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 li {
@@ -168,4 +214,25 @@ button {
 .projects button {
     font-size: 24px;
     margin-left: 24px;
+}
+
+.task {
+    width: 300px;
+    height: 200px;
+    border: 2px solid black;
+    padding: 16px;
+    border-radius: 20px;
+}
+
+h2 {
+    font-size: 32px;
+}
+
+.task > p {
+    font-size: 18px;
+    margin: 8px auto;
+}
+
+.complete {
+    text-decoration: line-through;
 }
