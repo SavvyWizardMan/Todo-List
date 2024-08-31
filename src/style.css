@@ -57,6 +57,13 @@ form {
     cursor: pointer;
 }
 
+form > button:last-child {
+    margin: 8px auto;
+    width: fit-content;
+    background-color: blue;
+    color: white;
+}
+
 fieldset {
     display: flex;
     padding: 16px;
