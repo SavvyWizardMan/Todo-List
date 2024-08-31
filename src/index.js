@@ -1,8 +1,12 @@
 import "./style.css";
+import dom from "./domscript";
 
 (function() {
     const container = document.querySelector('.container');
     const section = document.querySelector('section');
+    const addTaskBtn = document.querySelector('.add');
+    const dialog = document.querySelector('dialog');
+    const closeBtn = document.querySelector('.close');
 
     section.addEventListener('mousemove', (e) => {
         const x = e.clientX;
@@ -22,5 +26,13 @@ import "./style.css";
     section.addEventListener('mouseout', () => {
         container.style.setProperty("--ry", "0deg");
         container.style.setProperty("--rx", "0deg");
+    });
+
+    addTaskBtn.addEventListener('click', () => {
+        dialog.showModal();
+    });
+
+    closeBtn.addEventListener('click', () => {
+        dialog.close();
     });
 })();
