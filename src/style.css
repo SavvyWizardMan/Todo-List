@@ -211,6 +211,7 @@ section {
     padding: 16px;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50px;
     grid-auto-rows: 200px;
     column-gap: 67px;
     row-gap: 20px;
@@ -320,7 +321,16 @@ button {
 }
 
 h2 {
+    width: fit-content;
+    height: fit-content;
+    font-size: 48px;
+    grid-column: 1 / -1;
+}
+
+h3 {
     font-size: 32px;
+    font-weight: bold;
+    color: black;
 }
 
 .inner > p {

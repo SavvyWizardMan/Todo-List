@@ -6,11 +6,11 @@ export default class createTask {
         this.priority = priority;
     }
 
-    display(parent) {
+    display() {
         const div = document.createElement('div');
         const innerDiv = document.createElement('div');
         div.classList.add('task');
-        const titleP = document.createElement('h2');
+        const titleP = document.createElement('h3');
         const descP = document.createElement('p');
         const dateP = document.createElement('p');
         const taskLabel = document.createElement('label');
@@ -55,9 +55,7 @@ export default class createTask {
         
         div.appendChild(innerDiv);
 
-        parent.appendChild(div);
-
-        return innerDiv;
+        return div;
     }
 }
 
