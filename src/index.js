@@ -67,33 +67,36 @@ import createNote from "./application";
         dialog.close();
     });
     
-    section.addEventListener('mousemove', (e) => {
-        container.classList.remove('toggle');
-        const x = e.clientX;
-        const y = e.clientY;
+    /* This breaks the first div box's 3d effect
+        fuck you wizard
+     */
+    // section.addEventListener('mousemove', (e) => {
+    //     container.classList.remove('toggle');
+    //     const x = e.clientX;
+    //     const y = e.clientY;
 
-        //center of section element
-        const inx = section.clientWidth / 2;
-        const inh = section.clientHeight / 2;
+    //     //center of section element
+    //     const inx = section.clientWidth / 2;
+    //     const inh = section.clientHeight / 2;
 
-        //center of window
-        const mx = window.innerWidth / 2;
-        const my = window.innerHeight / 2;
+    //     //center of window
+    //     const mx = window.innerWidth / 2;
+    //     const my = window.innerHeight / 2;
 
-        //offset
-        const ox = ((x - inx) / mx) * 30;
-        const oy = ((y - inh) / my) * 15;
+    //     //offset
+    //     const ox = ((x - inx) / mx) * 30;
+    //     const oy = ((y - inh) / my) * 15;
 
-        container.style.setProperty("--ry", ox + "deg");
-        container.style.setProperty("--rx", -oy + "deg");
+    //     container.style.setProperty("--ry", ox + "deg");
+    //     container.style.setProperty("--rx", -oy + "deg");
 
-    });
+    // });
 
-    section.addEventListener('mouseout', () => {
-        container.classList.add('toggle');
-        container.style.setProperty("--ry", "0deg");
-        container.style.setProperty("--rx", "0deg");
-    });
+    // section.addEventListener('mouseout', () => {
+    //     container.classList.add('toggle');
+    //     container.style.setProperty("--ry", "0deg");
+    //     container.style.setProperty("--rx", "0deg");
+    // });
 
     addTaskBtn.addEventListener('click', () => {
         console.log('yea');
