@@ -6,18 +6,19 @@
     <title>Todo-List</title>
 </head>
 <body>
+    <h1>Todo-List</h1>
     <dialog>
         <button class="close">X</button>
-        <h1>Create Task</h1>
+        <h2>Create Task</h2>
         <form method="dialog">
             <label for="title">Title: </label><input type="text" id="title" required>
             <label for="desc">Description: </label><input type="text" id="desc" required>
             <label for="date">Due Date: </label><input type="date" id="date">
             <fieldset>
             <legend>Priority:</legend>
-                <label for="high">High</label><input type="radio" id="high" name="priority" required>
-                <label for="med">Medium</label><input type="radio" id="med" name="priority" required>
-                <label for="low">Low</label><input type="radio" id="low" name="priority" required>
+                <label for="high">High</label><input type="radio" id="high" name="priority" value="high" required>
+                <label for="med">Medium</label><input type="radio" id="med" name="priority" value="med" required>
+                <label for="low">Low</label><input type="radio" id="low" name="priority" value="low" required>
             </fieldset>
             <button type="button" class="addTask">Add Task</button>
         </form>

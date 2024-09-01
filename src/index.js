@@ -18,16 +18,30 @@ import createNote from "./application";
     const radio3 = document.querySelector('input[id="low"]');
     const inputs = [title, desc];
     const radios = [radio1, radio2, radio3];
+    const task = document.querySelector('.task');
+    const h1 = document.querySelector('h1');
+    let deg = 45;
     let priority = "";
 
+    setInterval(() => {
+        h1.setAttribute("style", `background-image: linear-gradient(${deg}deg, red, magenta, green, black)`);
+        deg++;
+
+        if (deg === 360) {
+            deg = 0;
+        }
+    }, 50);
+
     addTask.addEventListener('click', () => {
+        let localLength = localStorage.length;
+
         for (let i of inputs) {
             if (i.value === "") return;
         }
         let isChecked = false;
         for (let j of radios) {
             if (j.checked) {
-                priority = j;
+                priority = j.value;
                 isChecked = true;
                 break;
             }      
@@ -37,8 +51,13 @@ import createNote from "./application";
             return;
         }
 
-        const i = new createTask(title, desc, date, true);
+        const i = new createTask(title.value, desc.value, date.value, priority);
         i.display(section);
+
+        for (let j = localLength; j <= localLength; j++) {
+            console.log(j);
+            localStorage.setItem('task'+j, JSON.stringify({"title": title.value, "description": desc.value, "date": date.value, "priority": priority}));
+        }
 
         title.value = "";
         desc.value = "";
@@ -77,10 +96,23 @@ import createNote from "./application";
     });
 
     addTaskBtn.addEventListener('click', () => {
+        console.log('yea');
         dialog.showModal();
     });
 
     closeBtn.addEventListener('click', () => {
         dialog.close();
     });
+
+    localStorage.setItem("task0", JSON.stringify({"title": 'Wizard', "description": 'I am Wizard. I\'m in your localStorage.', "date": "2024-08-31", "priority": "high"}));
+
+    for (let i = 0; i < localStorage.length; i++) {
+        const e = JSON.parse(localStorage.getItem('task' + i));
+        const o = new createTask(e.title, e.description, e.date, e.priority);
+        const innerDiv = o.display(section);
+        if (innerDiv === null ||  innerDiv === undefined) continue;
+        innerDiv.addEventListener("hover", () => {
+            task.style.transform = "rotateY(20deg) rotateX(20deg)";
+        });
+    }
 })();
