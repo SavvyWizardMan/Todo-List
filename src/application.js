@@ -26,7 +26,7 @@ export default class createTask {
             case "high":
                 priorityP.classList.add('high');
             break;
-            case "med":
+            case "medium":
                 priorityP.classList.add('med');
             break;
             case "low":

@@ -14,7 +14,7 @@ import createNote from "./application";
     const desc = document.querySelector('input[id="desc"]')
     const date = document.querySelector('input[type="date"]')
     const radio1 = document.querySelector('input[id="high"]');
-    const radio2 = document.querySelector('input[id="med"]');
+    const radio2 = document.querySelector('input[id="medium"]');
     const radio3 = document.querySelector('input[id="low"]');
     const inputs = [title, desc];
     const radios = [radio1, radio2, radio3];
@@ -55,7 +55,6 @@ import createNote from "./application";
         i.display(section);
 
         for (let j = localLength; j <= localLength; j++) {
-            console.log(j);
             localStorage.setItem('task'+j, JSON.stringify({"title": title.value, "description": desc.value, "date": date.value, "priority": priority}));
         }
 
@@ -99,7 +98,6 @@ import createNote from "./application";
     // });
 
     addTaskBtn.addEventListener('click', () => {
-        console.log('yea');
         dialog.showModal();
     });
 
