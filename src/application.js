@@ -50,7 +50,7 @@ export default class createTask {
         innerDiv.appendChild(contain);
 
         taskDone.addEventListener('change', () => {
-            div.classList.toggle('complete');
+            innerDiv.classList.toggle('complete');
         });
         
         div.appendChild(innerDiv);
