@@ -1,4 +1,7 @@
-export default class createTask {
+import trash from "./trash.svg";
+import edit from "./notes.svg";
+
+export class createTask {
     constructor(title, description, dueDate, priority){
         this.title = title;
         this.description = description;
@@ -17,6 +20,10 @@ export default class createTask {
         const taskDone = document.createElement('input');
         const priorityP = document.createElement('span');
         const contain = document.createElement('div');
+        const delButton = document.createElement('button');
+        const delImg = document.createElement('img');
+        const editButton = document.createElement('button')
+        const editImg = document.createElement('img');
         titleP.innerText = this.title;
         descP.innerText = this.description;
         dateP.innerText = this.dueDate;
@@ -40,8 +47,18 @@ export default class createTask {
         taskDone.setAttribute('id', 'taskDone');
         contain.classList.add('flexit');
         innerDiv.classList.add('inner');
+        delButton.classList.add('icon');
+        editButton.classList.add('icon');
+        delImg.src = trash;
+        delImg.alt = "Trash bin";
+        editImg.src = edit;
+        editImg.alt = "Sketch pad to edit";
 
         innerDiv.appendChild(titleP);
+        delButton.appendChild(delImg);
+        editButton.appendChild(editImg);
+        innerDiv.appendChild(delButton);
+        innerDiv.appendChild(editButton);
         innerDiv.appendChild(descP);
         innerDiv.appendChild(dateP);
         innerDiv.appendChild(priorityP);
@@ -75,4 +92,19 @@ export class createNote {
         this.title = title;
         this.description = description;
     }
+}
+
+export default function(section) {
+    section.innerHTML = "";
+    const taskH2 = document.createElement('h2');
+    const projectsH2 = document.createElement('h2');
+    const projCon = document.createElement('div');
+
+    taskH2.innerText = "Tasks:";
+    projectsH2.innerText = "Projects:";
+    projCon.classList.add('project-box');
+
+    section.appendChild(taskH2);
+    section.appendChild(projectsH2);
+    section.appendChild(projCon);
 }

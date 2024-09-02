@@ -1,9 +1,10 @@
 import "./style.css";
-import createTask from "./application";
-import createProject from "./application";
-import createNote from "./application";
+import {createTask} from "./application";
+import {createProject} from "./application";
+import {createNote} from "./application";
 import homePage from "./home";
 import todayPage from "./today";
+import weekPage from "./week";
 
 (function() {
     const container = document.querySelector('.container');
@@ -12,17 +13,26 @@ import todayPage from "./today";
     const dialog = document.querySelector('dialog');
     const closeBtn = document.querySelector('.close');
     const addTask = document.querySelector('.addTask');
-    
+    const title = document.querySelector('input[id="title"]');
+    const desc = document.querySelector('input[id="desc"]');
+    const date = document.querySelector('input[type="date"]');
+    const radio1 = document.querySelector('input[id="high"]');
+    const radio2 = document.querySelector('input[id="medium"]');
+    const radio3 = document.querySelector('input[id="low"]');
+    const buttons = document.querySelectorAll('li > button');
+    const inputs = [title, desc, date];
+    const radios = [radio1, radio2, radio3];
+    let priority = "";
     const task = document.querySelector('.task');
     const h1 = document.querySelector('h1');
     const homeBtn = document.querySelector('#home');
     const todayBtn = document.querySelector('#today');
-    const taskBox = document.querySelector('.task-box');
+    const weekBtn = document.querySelector('#week');
     let deg = 45;
     const d = new Date();
     const dtoString = d.toISOString().split('T')[0].replace(/\d\d$/g, d.getDate());
-    localStorage.setItem("task0", JSON.stringify({"title": 'Wizard', "description": 'I am Wizard. I\'m in your localStorage.', "date": dtoString, "priority": "high"}));
 
+    localStorage.setItem('task0', JSON.stringify({"title": "Wizard", "description": "I am a Wizard that is in your localStorage.", "date": dtoString, "priority": "high"}));
     homePage(section);
 
     setInterval(() => {
@@ -33,6 +43,63 @@ import todayPage from "./today";
             deg = 0;
         }
     }, 100);
+
+    for (let j of radios) {
+        j.addEventListener('click', () => {
+            document.querySelector('fieldset').classList.add('correct')
+        });
+    }
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll(`li:not(li:last-child)`).forEach(li => {
+                li.childNodes.forEach(child => {
+                    if (child.id === button.id) {
+                        li.style.backgroundColor = "grey";
+                    } else {
+                        li.style.background = "none";
+                    }
+                });
+            });
+        });
+    });
+
+    addTask.addEventListener('click', () => {
+        let localLength = localStorage.length;
+
+        for (let i of inputs) {
+            if (i.value === "") return;
+        }
+        let isChecked = false;
+        for (let j of radios) {
+            if (j.checked) {
+                priority = j.value;
+                isChecked = true;
+                break;
+            }      
+        }
+
+        if (!isChecked) {
+            return;
+        }
+
+        const i = new createTask(title.value, desc.value, date.value, priority);
+        homePage(section).appendChild(i.display());
+        // somewhere around here I'll make it so
+        // you're not teleported to home
+
+        for (let j = localLength; j <= localLength; j++) {
+            localStorage.setItem('task'+j, JSON.stringify({"title": title.value, "description": desc.value, "date": date.value, "priority": priority}));
+        }
+
+        title.value = "";
+        desc.value = "";
+        radio1.checked = false;
+        radio2.checked = false;
+        radio3.checked = false;
+        document.querySelector('fieldset').classList.remove('correct');
+        dialog.close();
+    });
     
     /* This breaks the first div box's 3d effect
         fuck you wizard
@@ -75,5 +142,13 @@ import todayPage from "./today";
 
     homeBtn.addEventListener('click', () => homePage(section));
 
-    todayBtn.addEventListener('click', () => todayPage(section));
+    todayBtn.addEventListener('click', () => { 
+        const e = todayPage(section);
+        e();
+    });
+
+    weekBtn.addEventListener('click', () => {
+        const e = weekPage(section);
+        e();
+    });
 })();

@@ -1,27 +1,26 @@
-import createTask from "./application";
+import {createTask} from "./application";
 import createProject  from "./application";
 import createNote from "./application";
+import template from "./application";
 
 export default function(section) {
-    section.innerHTML = "";
-    const taskH2 = document.createElement('h2');
-    const projectH2 = document.createElement('h2');
-    const notesH2 = document.createElement('h2');
+    template(section);
+    
+    const taskCon = document.createElement('div');
+
+    taskCon.classList.add('task-box');
     const t = new Date();
     const m = t.getMonth() + 1;
 
-    taskH2.innerText = "Tasks:";
-    projectH2.innerText = "Projects:";
-    notesH2.innerText = "Notes:";
-
-    section.appendChild(taskH2);
-    for (let i = 0; i < localStorage.length; i++) {
+    return function() { for (let i = 0; i < localStorage.length; i++) {
         const e = JSON.parse(localStorage.getItem('task'+i)) || [];
-        if (e.date === `${t.getFullYear()}-${m < 10 ? "0"+m : m}-${t.getDate() < 10 ? "0"+t.getDate() : t.getDate()}`) {
-            const o = new createTask(e.title, e.description, e.date, e.priority);
-            section.appendChild(o.display());
+            if (e.date === `${t.getFullYear()}-${m < 10 ? "0"+m : m}-${t.getDate() < 10 ? "0"+t.getDate() : t.getDate()}`) {
+                const o = new createTask(e.title, e.description, e.date, e.priority);
+                taskCon.appendChild(o.display());
+            }
         }
+        section.appendChild(taskCon);
+        return taskCon;
     }
-    section.appendChild(projectH2);
-    section.appendChild(notesH2);
+
 }
