@@ -3,6 +3,7 @@ import createTask from "./application";
 import createProject from "./application";
 import createNote from "./application";
 import homePage from "./home";
+import todayPage from "./today";
 
 (function() {
     const container = document.querySelector('.container');
@@ -11,19 +12,16 @@ import homePage from "./home";
     const dialog = document.querySelector('dialog');
     const closeBtn = document.querySelector('.close');
     const addTask = document.querySelector('.addTask');
-    const title = document.querySelector('input[id="title"]')
-    const desc = document.querySelector('input[id="desc"]')
-    const date = document.querySelector('input[type="date"]')
-    const radio1 = document.querySelector('input[id="high"]');
-    const radio2 = document.querySelector('input[id="medium"]');
-    const radio3 = document.querySelector('input[id="low"]');
-    const inputs = [title, desc];
-    const radios = [radio1, radio2, radio3];
+    
     const task = document.querySelector('.task');
     const h1 = document.querySelector('h1');
     const homeBtn = document.querySelector('#home');
+    const todayBtn = document.querySelector('#today');
+    const taskBox = document.querySelector('.task-box');
     let deg = 45;
-    let priority = "";
+    const d = new Date();
+    const dtoString = d.toISOString().split('T')[0].replace(/\d\d$/g, d.getDate());
+    localStorage.setItem("task0", JSON.stringify({"title": 'Wizard', "description": 'I am Wizard. I\'m in your localStorage.', "date": dtoString, "priority": "high"}));
 
     homePage(section);
 
@@ -35,41 +33,6 @@ import homePage from "./home";
             deg = 0;
         }
     }, 100);
-
-    addTask.addEventListener('click', () => {
-        let localLength = localStorage.length;
-
-        for (let i of inputs) {
-            if (i.value === "") return;
-        }
-        let isChecked = false;
-        for (let j of radios) {
-            if (j.checked) {
-                priority = j.value;
-                isChecked = true;
-                break;
-            }      
-        }
-
-        if (!isChecked) {
-            return;
-        }
-
-        const i = new createTask(title.value, desc.value, date.value, priority);
-        const o = i.display();
-        section.appendChild(o);
-
-        for (let j = localLength; j <= localLength; j++) {
-            localStorage.setItem('task'+j, JSON.stringify({"title": title.value, "description": desc.value, "date": date.value, "priority": priority}));
-        }
-
-        title.value = "";
-        desc.value = "";
-        radio1.checked = false;
-        radio2.checked = false;
-        radio3.checked = false;
-        dialog.close();
-    });
     
     /* This breaks the first div box's 3d effect
         fuck you wizard
@@ -110,7 +73,7 @@ import homePage from "./home";
         dialog.close();
     });
 
-    homeBtn.addEventListener('click', () => { 
-        homePage(section);
-    });
+    homeBtn.addEventListener('click', () => homePage(section));
+
+    todayBtn.addEventListener('click', () => todayPage(section));
 })();

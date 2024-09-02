@@ -41,6 +41,19 @@ h1:hover {
     }
 }
 
+.task-box, .proj-box, .notes-box {
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 67px;
+    row-gap: 20px;
+}
+
+.task-box {
+    grid-column: 1 / -1;
+    grid-row: 2 / 3;
+}
+
 dialog > h2 {
     top: 0;
     padding: 8px;
@@ -48,6 +61,7 @@ dialog > h2 {
     width: fit-content;
     left: 150px;
     position: absolute;
+    font-size: 36px;
 }
 
 .container {
@@ -210,12 +224,12 @@ section {
     grid-column: 2 / -1;
     padding: 16px;
     display: grid;
+    height: auto;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 50px;
-    grid-auto-rows: 200px;
-    column-gap: 67px;
+    grid-template-rows: 1fr 2fr repeat(3, 1fr);
+    grid-auto-rows: 50px;
     row-gap: 20px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -325,6 +339,18 @@ h2 {
     height: fit-content;
     font-size: 48px;
     grid-column: 1 / -1;
+}
+
+section > h2:nth-child(1) {
+    grid-row: 1 / 2;
+}
+
+section > h2:nth-child(2) {
+    grid-row: 3 / 4;
+}
+
+section > h2:last-child {
+    grid-row: 5 / 6;
 }
 
 h3 {
