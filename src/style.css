@@ -58,9 +58,9 @@ dialog > h2 {
     top: 0;
     padding: 8px;
     margin: auto;
+    margin-top: -50px;
     width: fit-content;
     left: 150px;
-    position: absolute;
     font-size: 36px;
 }
 
@@ -144,6 +144,9 @@ form {
 }
 
 .close {
+    background: none;
+    border: none;
+    font-size: 32px;
     padding: 8px;
     width: 50px;
     position: relative;
@@ -156,6 +159,10 @@ form > button:last-child {
     width: fit-content;
     background-color: blue;
     color: white;
+    font-size: 32px;
+    padding: 8px 24px;
+    border: none;
+    cursor: pointer;
 }
 
 fieldset {

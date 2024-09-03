@@ -11,13 +11,11 @@ export default function(section) {
     for (let i = 0; i < localStorage.length; i++) {
         const e = JSON.parse(localStorage.getItem('task' + i)) || [];
         const o = new createTask(e.title, e.description, e.date, e.priority);
+        o.display().setAttribute('data-task', 0);
         taskCon.appendChild(o.display());
     }
     section.appendChild(taskCon);
 
-    return taskCon;
-    
-    // I dont fucking know anymore
-    
+    return taskCon;    
 };
 

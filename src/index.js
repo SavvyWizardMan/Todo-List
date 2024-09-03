@@ -30,7 +30,7 @@ import weekPage from "./week";
     const weekBtn = document.querySelector('#week');
     let deg = 45;
     const d = new Date();
-    const dtoString = d.toISOString().split('T')[0].replace(/\d\d$/g, d.getDate());
+    const dtoString = `${d.getFullYear()}-${d.getMonth() + 1 < 10 ? "0"+(d.getMonth() + 1) : d.getMonth() + 1}-${d.getDate() < 10 ? "0"+d.getDate() : d.getDate()}`;
 
     localStorage.setItem('task0', JSON.stringify({"title": "Wizard", "description": "I am a Wizard that is in your localStorage.", "date": dtoString, "priority": "high"}));
     homePage(section);
@@ -90,6 +90,10 @@ import weekPage from "./week";
 
         for (let j = localLength; j <= localLength; j++) {
             localStorage.setItem('task'+j, JSON.stringify({"title": title.value, "description": desc.value, "date": date.value, "priority": priority}));
+        }
+
+        for (let j = localStorage.length - 1; j < localStorage.length; j++) {
+            i.display().setAttribute('data-task', j);
         }
 
         title.value = "";
