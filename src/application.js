@@ -18,7 +18,7 @@ export class createTask {
         const dateP = document.createElement('p');
         const taskLabel = document.createElement('label');
         const taskDone = document.createElement('input');
-        const priorityP = document.createElement('span');
+        const priorityP = document.createElement('p');
         const contain = document.createElement('div');
         const delButton = document.createElement('button');
         const delImg = document.createElement('img');
@@ -110,6 +110,7 @@ export class createTask {
             const r3 = radio3.cloneNode();
 
             const priorityIn = [r1, r2, r3];
+            const inputs = [t, d, da];
             
             const lastBtn = document.querySelector('form > button');
             const l = lastBtn.cloneNode();
@@ -143,9 +144,14 @@ export class createTask {
                 editButton.parentNode.querySelector('h3').innerText = t.value;
                 editButton.parentNode.querySelector('p').innerText = d.value;
                 editButton.parentNode.querySelector('p:nth-child(5)').innerText = da.value;
+                
+                for (let i of inputs) {
+                    if (i.value === "") return;
+                }
+                
                 priorityIn.forEach(rad => {
                     if (rad.checked) {
-                        editButton.parentNode.querySelector('span').innerText = rad.value;
+                        editButton.parentNode.querySelector('.inner > p:nth-child(6)').innerText = rad.value;
 
                         switch(rad.value) {
                             case "high":

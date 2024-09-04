@@ -9,7 +9,7 @@ import weekPage from "./week";
 (function() {
     const container = document.querySelector('.container');
     const section = document.querySelector('section');
-    const addTaskBtn = document.querySelector('.add');
+    const addTaskBtn = document.querySelector('#add');
     const dialog = document.querySelector('dialog');
     const closeBtn = document.querySelector('.close');
     const addTask = document.querySelector('.addTask');
@@ -92,12 +92,9 @@ import weekPage from "./week";
             localStorage.setItem('task'+j, JSON.stringify({"title": title.value, "description": desc.value, "date": date.value, "priority": priority}));
         }
 
-        for (let j = localStorage.length - 1; j < localStorage.length; j++) {
-            i.display().setAttribute('data-task', j);
-        }
-
         title.value = "";
         desc.value = "";
+        date.value = "";
         radio1.checked = false;
         radio2.checked = false;
         radio3.checked = false;
