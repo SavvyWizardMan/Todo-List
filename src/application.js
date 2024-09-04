@@ -10,6 +10,7 @@ export class createTask {
     }
 
     display() {
+        const wrapper = document.createElement('div');
         const div = document.createElement('div');
         const innerDiv = document.createElement('div');
         div.classList.add('task');
@@ -41,10 +42,11 @@ export class createTask {
             break;
         }
 
-        taskLabel.setAttribute('for', 'taskDone');
         taskLabel.innerText = "Task Complete?";
         taskDone.setAttribute('type', 'checkbox');
-        taskDone.setAttribute('id', 'taskDone');
+        // incorporate way to make ids unique
+        // taskLabel.setAttribute('for', 'taskDone');
+        // taskDone.setAttribute('id', 'taskDone');
         contain.classList.add('flexit');
         innerDiv.classList.add('inner');
         delButton.classList.add('icon');
@@ -53,6 +55,10 @@ export class createTask {
         delImg.alt = "Trash bin";
         editImg.src = edit;
         editImg.alt = "Sketch pad to edit";
+
+        wrapper.classList.add('wrapper');
+        descP.classList.add('desc');
+        dateP.classList.add('date');
 
         innerDiv.appendChild(titleP);
         delButton.appendChild(delImg);
@@ -71,7 +77,7 @@ export class createTask {
         });
 
         delButton.addEventListener('click', () => {
-            document.querySelector('.task-box').removeChild(div);
+            document.querySelector('.task-box').removeChild(wrapper);
             localStorage.removeItem('task'+div.getAttribute('data-task'));
         });
 
@@ -194,8 +200,9 @@ export class createTask {
         });
         
         div.appendChild(innerDiv);
+        wrapper.appendChild(div);
 
-        return div;
+        return wrapper;
     }
 }
 

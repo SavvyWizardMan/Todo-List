@@ -5,6 +5,7 @@ import {createNote} from "./application";
 import homePage from "./home";
 import todayPage from "./today";
 import weekPage from "./week";
+import evil from "./evil.mp3";
 
 (function() {
     const container = document.querySelector('.container');
@@ -28,6 +29,7 @@ import weekPage from "./week";
     const homeBtn = document.querySelector('#home');
     const todayBtn = document.querySelector('#today');
     const weekBtn = document.querySelector('#week');
+    const img = document.querySelector('.wizard');
     let deg = 45;
     const d = new Date();
     const dtoString = `${d.getFullYear()}-${d.getMonth() + 1 < 10 ? "0"+(d.getMonth() + 1) : d.getMonth() + 1}-${d.getDate() < 10 ? "0"+d.getDate() : d.getDate()}`;
@@ -49,26 +51,97 @@ import weekPage from "./week";
             document.querySelector('fieldset').classList.add('correct')
         });
     }
+    var pos1 = 0; 
+    var pos2 = 0;
+    var pos3 = 0;
+    var pos4 = 0;
+
+    /* shoutout to the bros at w3Schools */
+
+    dragElement(container);
+
+    function dragElement(elem) {
+        elem.onmousedown = dragMouseDown;
+    }
+
+    function dragMouseDown(e) {
+        e = e;
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+        e = e;
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        container.style.top = (container.offsetTop - pos2) + "px";
+        container.style.left = (container.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+
+    /* ------------------------------------------------- */
+
+    img.addEventListener('click', () => {
+        const a = new Audio();
+        a.src = "";
+        a.play();
+    });
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             document.querySelectorAll(`li:not(li:last-child)`).forEach(li => {
                 li.childNodes.forEach(child => {
                     if (child.id === button.id) {
-                        li.style.backgroundColor = "grey";
+                        li.style.borderTop = "2px inset black";
+                        li.style.borderLeft = "2px inset black";
+                        li.style.borderRight = "2px inset black";
+                        li.style.background = "#bbb";
+                        document.querySelector('li:first-child').style.borderTopLeftRadius = "8px";
                     } else {
+                        li.style.border = "none";
                         li.style.background = "none";
+                        li.style.borderBottom = "2px solid black";
                     }
                 });
             });
         });
     });
 
+    for (let i of inputs) {
+        i.addEventListener('focus', () => {
+            i.previousSibling.style.position = "relative";
+            i.previousSibling.style.top = "25px";
+            i.previousSibling.style.left = "-65px";
+        });
+
+        i.addEventListener('focusout', () => {
+            i.previousSibling.style.top = "0";
+            i.previousSibling.style.left = "0";
+        });
+    }
+
     addTask.addEventListener('click', () => {
         let localLength = localStorage.length;
 
         for (let i of inputs) {
             if (i.value === "") return;
+
+            i.addEventListener('click', () => {
+                console.log('clicked');
+                i.previousSibling.style.position = "relative";
+                i.previousSibling.style.top = "25px";
+                i.previousSibling.style.left = "-65px";
+            });
         }
         let isChecked = false;
         for (let j of radios) {

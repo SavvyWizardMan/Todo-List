@@ -1,6 +1,5 @@
 import {createTask} from "./application";
-import createProject  from "./application";
-import createNote from "./application";
+import {createProject}  from "./application";
 import template from "./application";
 
 export default function(section) {
