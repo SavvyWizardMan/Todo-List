@@ -5,7 +5,6 @@ import {createNote} from "./application";
 import homePage from "./home";
 import todayPage from "./today";
 import weekPage from "./week";
-import evil from "./evil.mp3";
 
 (function() {
     const container = document.querySelector('.container');
@@ -92,8 +91,7 @@ import evil from "./evil.mp3";
     /* ------------------------------------------------- */
 
     img.addEventListener('click', () => {
-        const a = new Audio();
-        a.src = "";
+        const a = document.querySelector('audio');
         a.play();
     });
 
