@@ -12,6 +12,7 @@
 
 body {
     background-color: beige;
+    overflow: hidden;
 }
 
 h1 {
@@ -74,7 +75,7 @@ dialog > h2 {
     top: 50%;
     left: 50%;
     transform-style: preserve-3d;
-    transform: translate(-50%, -50%) perspective(5000px) rotateY(var(--ry)) rotateX(var(--rx));
+    transform: translate(-50%, -60%) perspective(5000px) rotateY(var(--ry)) rotateX(var(--rx));
     display: grid;
     grid-template-columns: 1fr repeat(4, 1fr);
 }
@@ -274,6 +275,19 @@ ul > li:last-child {
     top: 25%;
     left: 25%;
     transform: translate(-50% -50%);
+}
+
+@keyframes ducked {
+    from {
+        width: 700px;
+        height: 300px;
+        transform: translateX(0px) scale(0);
+    } 
+    to {
+        width: 1000px;
+        height: 100px;
+        transform: translateX(-2000px) scale(10);
+    }
 }
 
 ul > li:last-child button {

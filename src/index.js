@@ -90,9 +90,11 @@ import weekPage from "./week";
 
     /* ------------------------------------------------- */
 
-    img.addEventListener('click', () => {
-        const a = document.querySelector('audio');
+    const a = document.querySelector('audio');
+    img.addEventListener('mouseenter', () => {
         a.play();
+        img.style.animation = "ducked 163s cubic-bezier(0, 0, 0.55, 0.95) 1";
+        img.style.zIndex = 3;
     });
 
     buttons.forEach(button => {
