@@ -33,7 +33,7 @@ import weekPage from "./week";
     const d = new Date();
     const dtoString = `${d.getFullYear()}-${d.getMonth() + 1 < 10 ? "0"+(d.getMonth() + 1) : d.getMonth() + 1}-${d.getDate() < 10 ? "0"+d.getDate() : d.getDate()}`;
 
-    localStorage.setItem('task0', JSON.stringify({"title": "Wizard", "description": "I am a Wizard that is in your localStorage.", "date": dtoString, "priority": "high"}));
+    localStorage.setItem('task0', JSON.stringify({"title": "Wizard", "description": "I am a Wizard that is in your localStorage.", "date": dtoString, "priority": "high", "data-task": 0}));
     homePage(section);
 
     setInterval(() => {
@@ -137,7 +137,6 @@ import weekPage from "./week";
             if (i.value === "") return;
 
             i.addEventListener('click', () => {
-                console.log('clicked');
                 i.previousSibling.style.position = "relative";
                 i.previousSibling.style.top = "25px";
                 i.previousSibling.style.left = "-65px";
@@ -156,15 +155,17 @@ import weekPage from "./week";
             return;
         }
 
-        const i = new createTask(title.value, desc.value, date.value, priority);
-        homePage(section).appendChild(i.display());
         // somewhere around here I'll make it so
         // you're not teleported to home
 
         for (let j = localLength; j <= localLength; j++) {
-            localStorage.setItem('task'+j, JSON.stringify({"title": title.value, "description": desc.value, "date": date.value, "priority": priority}));
+            localStorage.setItem('task'+j, JSON.stringify({"title": title.value, "description": desc.value, "date": date.value, "priority": priority, "data-task": j}));
         }
 
+        const i = new createTask(title.value, desc.value, date.value, priority);
+        const obj = i.display();
+        homePage(section);
+        
         title.value = "";
         desc.value = "";
         date.value = "";

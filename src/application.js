@@ -76,9 +76,15 @@ export class createTask {
             innerDiv.classList.toggle('complete');
         });
 
+        // every div gets the same one
+        // for (let i = localStorage.length - 1; i < localStorage.length; i++) {
+        //     const e = JSON.parse(localStorage.getItem('task'+i));
+        //     console.log(e);
+        //     div.setAttribute('data-task', e["data-task"]);
+        // }
+
         delButton.addEventListener('click', () => {
             document.querySelector('.task-box').removeChild(wrapper);
-            localStorage.removeItem('task'+div.getAttribute('data-task'));
         });
 
         editButton.addEventListener('click', () => {
