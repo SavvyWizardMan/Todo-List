@@ -57,11 +57,7 @@ import weekPage from "./week";
 
     /* shoutout to the bros at w3Schools */
 
-    dragElement(container);
-
-    function dragElement(elem) {
-        elem.onmousedown = dragMouseDown;
-    }
+    container.addEventListener('mousedown', dragMouseDown);
 
     function dragMouseDown(e) {
         e = e;
@@ -95,6 +91,10 @@ import weekPage from "./week";
         a.play();
         img.style.animation = "ducked 163s cubic-bezier(0, 0, 0.55, 0.95) 1";
         img.style.zIndex = 3;
+
+        img.addEventListener('animationend', () => {
+            img.style.animation = "";
+        });
     });
 
     buttons.forEach(button => {
