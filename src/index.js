@@ -33,7 +33,13 @@ import weekPage from "./week";
     const d = new Date();
     const dtoString = `${d.getFullYear()}-${d.getMonth() + 1 < 10 ? "0"+(d.getMonth() + 1) : d.getMonth() + 1}-${d.getDate() < 10 ? "0"+d.getDate() : d.getDate()}`;
 
-    localStorage.setItem('task0', JSON.stringify({"title": "Wizard", "description": "I am a Wizard that is in your localStorage.", "date": dtoString, "priority": "high"}));
+    /* 
+        evil wizard 
+        on a real note, this would overwrite the first todo task someone made
+        on refresh since it sets task0 to my devious wizard and doesn't "push" the
+        other todos up by a step
+    */
+    // localStorage.setItem('task0', JSON.stringify({"title": "Wizard", "description": "I am a Wizard that is in your localStorage.", "date": dtoString, "priority": "high"}));
     homePage(section);
 
     setInterval(() => {

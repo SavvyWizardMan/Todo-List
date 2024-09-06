@@ -92,6 +92,7 @@ export class createTask {
 
         delButton.addEventListener('click', () => {
             const con = confirm("Are you sure?");
+            const local = localStorage.length;
 
             if (con) {
                 let index = 0;
@@ -109,19 +110,13 @@ export class createTask {
 
                 for (let j = index; j < localStorage.length; j++) {
                     let ahead = j + 1;
-                    const k = JSON.parse(localStorage.getItem('task'+j));
                     const o = JSON.parse(localStorage.getItem('task'+ahead));
-                    if (o === null) continue;
-                    if (k === null) {
-                        localStorage.setItem('task'+j, JSON.stringify({"title": o.title, "description": o.description, "date": o.date, "priority": o.priority}));
-                    } else {
-                        localStorage.setItem('task'+j, JSON.stringify({"title": o.title, "description": o.description, "date": o.date, "priority": o.priority}));
-                    }
+                    if (o === null) break;
+                    localStorage.setItem('task'+j, JSON.stringify({"title": o.title, "description": o.description, "date": o.date, "priority": o.priority}));
                 }
 
-                const num = localStorage.length;
-                for (let h = num - 1; h < num; h++) {
-                    if (num === 0) break;
+                for (let h = local - 1; h < local; h++) {
+                    if (local === 0) break;
                     localStorage.removeItem('task'+h);
                 }
 
