@@ -3,11 +3,8 @@ import {createProject}  from "./application";
 import template from "./application";
 
 export default function(section) {
-    template(section);
+    const taskCon = template(section);
     
-    const taskCon = document.createElement('div');
-
-    taskCon.classList.add('task-box');
     const t = new Date();
     const m = t.getMonth() + 1;
 
@@ -15,10 +12,11 @@ export default function(section) {
         const e = JSON.parse(localStorage.getItem('task'+i)) || [];
             if (e.date === `${t.getFullYear()}-${m < 10 ? "0"+m : m}-${t.getDate() < 10 ? "0"+t.getDate() : t.getDate()}`) {
                 const o = new createTask(e.title, e.description, e.date, e.priority);
-                taskCon.appendChild(o.display());
+                const h = o.display();
+                h.setAttribute('data-task', i);
+                taskCon.appendChild(h);
             }
         }
-        section.appendChild(taskCon);
         return taskCon;
     }
 

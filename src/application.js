@@ -1,6 +1,8 @@
 import trash from "./trash.svg";
 import edit from "./notes.svg";
 import homePage from "./home";
+import todayPage from "./today";
+import weekPage from "./week";
 
 export class createTask {
     constructor(title, description, dueDate, priority){
@@ -77,6 +79,10 @@ export class createTask {
             innerDiv.classList.toggle('complete');
         });
 
+        if (new Date(this.date).getTime() < new Date().getTime()) {
+            innerDiv.classList.add('pastDue');
+        }
+
         // every div gets the same one
         // for (let i = localStorage.length - 1; i < localStorage.length; i++) {
         //     const e = JSON.parse(localStorage.getItem('task'+i));
@@ -88,39 +94,38 @@ export class createTask {
             const con = confirm("Are you sure?");
 
             if (con) {
+                let index = 0;
                 for (let i = 0; i < localStorage.length; i++) {
-                    const obj = JSON.parse(localStorage.getItem('task'+i));
-                    let index = i;
-
-                    if (obj["data-task"] === Number(wrapper.getAttribute('data-task'))) {
+                    index = i;
+                    if (i === Number(wrapper.getAttribute('data-task'))) {
                         localStorage.removeItem('task'+i);
                         document.querySelector('.task-box').removeChild(wrapper);
-                        const obj = homePage(document.querySelector('section'));
-                        obj.querySelectorAll('.wrapper').forEach(divs => {
-                            for (let i = 0; i < localStorage.length; i++) {
-                                div.setAttribute('data-task', i);
-                            }
-                        });
                         break;
                     }
                 }
-                console.log(localStorage.length);
-                for (let j = 0; j <= localStorage.length; j++) {
-                    let prev = j - 1;
-                    if (j === 0) {
-                        prev = 0;
-                    }
+                if (localStorage.length === 0) return;
+
+                let atEnd = false;
+
+                for (let j = index; j < localStorage.length; j++) {
+                    let ahead = j + 1;
                     const k = JSON.parse(localStorage.getItem('task'+j));
-                    if (k === null) continue;
-                    console.log(j + "      " + prev + "       " + k.title);
-                    localStorage.setItem('task'+prev, JSON.stringify({"title": k.title, "description": k.description, "date": k.date, "priority": k.priority, "data-task": k["data-task"]}));
+                    const o = JSON.parse(localStorage.getItem('task'+ahead));
+                    if (o === null) continue;
+                    if (k === null) {
+                        localStorage.setItem('task'+j, JSON.stringify({"title": o.title, "description": o.description, "date": o.date, "priority": o.priority}));
+                    } else {
+                        localStorage.setItem('task'+j, JSON.stringify({"title": o.title, "description": o.description, "date": o.date, "priority": o.priority}));
+                    }
                 }
 
                 const num = localStorage.length;
-                for (let h = num - 1; h <= num - 1; h++) {
-                    localStorage.removeItem('task'+h)
+                for (let h = num - 1; h < num; h++) {
+                    if (num === 0) break;
+                    localStorage.removeItem('task'+h);
                 }
-                
+
+                homePage(document.querySelector('section'));
             }
         });
 
@@ -160,6 +165,7 @@ export class createTask {
 
             const priorityIn = [r1, r2, r3];
             const inputs = [t, d, da];
+            let thePriority = "";
             
             const lastBtn = document.querySelector('form > button');
             const l = lastBtn.cloneNode();
@@ -200,21 +206,34 @@ export class createTask {
                 
                 priorityIn.forEach(rad => {
                     if (rad.checked) {
+                        thePriority = rad.value;
                         editButton.parentNode.querySelector('.inner > p:nth-child(6)').innerText = rad.value;
 
                         switch(rad.value) {
                             case "high":
                                 priorityP.classList.add('high');
+                                priorityP.classList.remove('med');
+                                priorityP.classList.remove('low');
                             break;
                             case "medium":
                                 priorityP.classList.add('med');
+                                priorityP.classList.remove('low');
+                                priorityP.classList.remove('high');
                             break;
                             case "low":
                                 priorityP.classList.add('low');
+                                priorityP.classList.remove('med');
+                                priorityP.classList.remove('high');
                             break;
                         }
                     }
                 });
+
+                for (let i = 0; i < localStorage.length; i++) {
+                    if (i === Number(wrapper.getAttribute('data-task'))) {
+                        localStorage.setItem('task'+i, JSON.stringify({"title": t.value, "description": d.value, "date": da.value, "priority": thePriority}));
+                    }
+                }
 
                 this.display();
                 diag.close();
@@ -269,6 +288,8 @@ export class createNote {
 
 export default function(section) {
     section.innerHTML = "";
+    const taskCon = document.createElement('div');
+    taskCon.classList.add('task-box');
     const taskH2 = document.createElement('h2');
     const projectsH2 = document.createElement('h2');
     const projCon = document.createElement('div');
@@ -278,6 +299,10 @@ export default function(section) {
     projCon.classList.add('project-box');
 
     section.appendChild(taskH2);
+    section.appendChild(taskCon);
     section.appendChild(projectsH2);
     section.appendChild(projCon);
+    section.appendChild(projCon);
+
+    return taskCon;
 }

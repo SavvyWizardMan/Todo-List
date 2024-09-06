@@ -46,6 +46,8 @@ h1:hover {
     grid-template-columns: 1fr 1fr;
     column-gap: 67px;
     row-gap: 20px;
+    font-size: 32px;
+    margin-left: 8px;
 }
 
 .task-box {
@@ -270,6 +272,10 @@ ul > li:last-child {
     height: 60px;
 }
 
+.pastDue {
+    background-color: red;
+}
+
 .wizard {
     position: absolute;
     top: 25%;
@@ -479,8 +485,18 @@ h3 {
     gap: 30px;
 }
 
+.func {
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 .flexit > label {
     align-self: center;
+    font-size: 18px;
 }
 
 .complete > h3, .complete > p, .complete > p:nth-child(6) {

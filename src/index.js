@@ -33,7 +33,7 @@ import weekPage from "./week";
     const d = new Date();
     const dtoString = `${d.getFullYear()}-${d.getMonth() + 1 < 10 ? "0"+(d.getMonth() + 1) : d.getMonth() + 1}-${d.getDate() < 10 ? "0"+d.getDate() : d.getDate()}`;
 
-    localStorage.setItem('task0', JSON.stringify({"title": "Wizard", "description": "I am a Wizard that is in your localStorage.", "date": dtoString, "priority": "high", "data-task": 0}));
+    localStorage.setItem('task0', JSON.stringify({"title": "Wizard", "description": "I am a Wizard that is in your localStorage.", "date": dtoString, "priority": "high"}));
     homePage(section);
 
     setInterval(() => {
@@ -57,7 +57,7 @@ import weekPage from "./week";
 
     /* shoutout to the bros at w3Schools */
 
-    container.addEventListener('mousedown', dragMouseDown);
+    document.querySelector('.func').addEventListener('mousedown', dragMouseDown);
 
     function dragMouseDown(e) {
         e = e;
@@ -100,6 +100,21 @@ import weekPage from "./week";
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             document.querySelectorAll(`li:not(li:last-child)`).forEach(li => {
+                li.childNodes.forEach(child => {
+                    if (child.id === button.id) {
+                        li.style.borderTop = "2px inset black";
+                        li.style.borderLeft = "2px inset black";
+                        li.style.borderRight = "2px inset black";
+                        li.style.background = "#bbb";
+                        document.querySelector('li:first-child').style.borderTopLeftRadius = "8px";
+                    } else {
+                        li.style.border = "none";
+                        li.style.background = "none";
+                        li.style.borderBottom = "2px solid black";
+                    }
+                });
+            });
+            document.querySelectorAll('.projects > li').forEach(li => {
                 li.childNodes.forEach(child => {
                     if (child.id === button.id) {
                         li.style.borderTop = "2px inset black";
@@ -159,7 +174,7 @@ import weekPage from "./week";
         // you're not teleported to home
 
         for (let j = localLength; j <= localLength; j++) {
-            localStorage.setItem('task'+j, JSON.stringify({"title": title.value, "description": desc.value, "date": date.value, "priority": priority, "data-task": j}));
+            localStorage.setItem('task'+j, JSON.stringify({"title": title.value, "description": desc.value, "date": date.value, "priority": priority}));
         }
 
         const i = new createTask(title.value, desc.value, date.value, priority);
@@ -215,7 +230,9 @@ import weekPage from "./week";
         dialog.close();
     });
 
-    homeBtn.addEventListener('click', () => homePage(section));
+    homeBtn.addEventListener('click', () => { 
+        homePage(section);
+    });
 
     todayBtn.addEventListener('click', () => { 
         const e = todayPage(section);
