@@ -10,6 +10,7 @@ export default function(section) {
     const notesH2 = document.createElement('h2');
     const li = document.querySelector('li:first-child');
 
+    
     li.style.borderTop = "2px inset black";
     li.style.borderLeft = "2px inset black";
     li.style.borderRight = "2px inset black";

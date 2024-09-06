@@ -6,28 +6,18 @@ import homePage from "./home";
 import todayPage from "./today";
 import weekPage from "./week";
 
+import notesPage from "./notes";
+
 (function() {
     const container = document.querySelector('.container');
     const section = document.querySelector('section');
-    const addTaskBtn = document.querySelector('#add');
-    const dialog = document.querySelector('dialog');
-    const closeBtn = document.querySelector('.close');
-    const addTask = document.querySelector('.addTask');
-    const title = document.querySelector('input[id="title"]');
-    const desc = document.querySelector('input[id="desc"]');
-    const date = document.querySelector('input[type="date"]');
-    const radio1 = document.querySelector('input[id="high"]');
-    const radio2 = document.querySelector('input[id="medium"]');
-    const radio3 = document.querySelector('input[id="low"]');
     const buttons = document.querySelectorAll('li > button');
-    const inputs = [title, desc, date];
-    const radios = [radio1, radio2, radio3];
-    let priority = "";
-    const task = document.querySelector('.task');
     const h1 = document.querySelector('h1');
     const homeBtn = document.querySelector('#home');
     const todayBtn = document.querySelector('#today');
     const weekBtn = document.querySelector('#week');
+
+    const notesBtn = document.querySelector('#notes');
     const img = document.querySelector('.wizard');
     let deg = 45;
     const d = new Date();
@@ -51,11 +41,6 @@ import weekPage from "./week";
         }
     }, 100);
 
-    for (let j of radios) {
-        j.addEventListener('click', () => {
-            document.querySelector('fieldset').classList.add('correct')
-        });
-    }
     var pos1 = 0; 
     var pos2 = 0;
     var pos3 = 0;
@@ -137,65 +122,6 @@ import weekPage from "./week";
             });
         });
     });
-
-    for (let i of inputs) {
-        i.addEventListener('focus', () => {
-            i.previousSibling.style.position = "relative";
-            i.previousSibling.style.top = "25px";
-            i.previousSibling.style.left = "-65px";
-        });
-
-        i.addEventListener('focusout', () => {
-            i.previousSibling.style.top = "0";
-            i.previousSibling.style.left = "0";
-        });
-    }
-
-    addTask.addEventListener('click', () => {
-        let localLength = localStorage.length;
-
-        for (let i of inputs) {
-            if (i.value === "") return;
-
-            i.addEventListener('click', () => {
-                i.previousSibling.style.position = "relative";
-                i.previousSibling.style.top = "25px";
-                i.previousSibling.style.left = "-65px";
-            });
-        }
-        let isChecked = false;
-        for (let j of radios) {
-            if (j.checked) {
-                priority = j.value;
-                isChecked = true;
-                break;
-            }      
-        }
-
-        if (!isChecked) {
-            return;
-        }
-
-        // somewhere around here I'll make it so
-        // you're not teleported to home
-
-        for (let j = localLength; j <= localLength; j++) {
-            localStorage.setItem('task'+j, JSON.stringify({"title": title.value, "description": desc.value, "date": date.value, "priority": priority}));
-        }
-
-        const i = new createTask(title.value, desc.value, date.value, priority);
-        const obj = i.display();
-        homePage(section);
-        
-        title.value = "";
-        desc.value = "";
-        date.value = "";
-        radio1.checked = false;
-        radio2.checked = false;
-        radio3.checked = false;
-        document.querySelector('fieldset').classList.remove('correct');
-        dialog.close();
-    });
     
     /* This breaks the first div box's 3d effect
         fuck you wizard
@@ -228,14 +154,6 @@ import weekPage from "./week";
     //     container.style.setProperty("--rx", "0deg");
     // });
 
-    addTaskBtn.addEventListener('click', () => {
-        dialog.showModal();
-    });
-
-    closeBtn.addEventListener('click', () => {
-        dialog.close();
-    });
-
     homeBtn.addEventListener('click', () => { 
         homePage(section);
     });
@@ -248,5 +166,9 @@ import weekPage from "./week";
     weekBtn.addEventListener('click', () => {
         const e = weekPage(section);
         e();
+    });
+
+    notesBtn.addEventListener('click', () => {
+        notesPage(section);
     });
 })();
