@@ -489,7 +489,6 @@ h3 {
     width: 10px;
     height: 10px;
     background-color: transparent;
-    z-index: 3;
     position: absolute;
     top: 0;
     right: 70px;
