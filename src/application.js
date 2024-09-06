@@ -1,5 +1,6 @@
 import trash from "./trash.svg";
 import edit from "./notes.svg";
+import homePage from "./home";
 
 export class createTask {
     constructor(title, description, dueDate, priority){
@@ -84,7 +85,43 @@ export class createTask {
         // }
 
         delButton.addEventListener('click', () => {
-            document.querySelector('.task-box').removeChild(wrapper);
+            const con = confirm("Are you sure?");
+
+            if (con) {
+                for (let i = 0; i < localStorage.length; i++) {
+                    const obj = JSON.parse(localStorage.getItem('task'+i));
+                    let index = i;
+
+                    if (obj["data-task"] === Number(wrapper.getAttribute('data-task'))) {
+                        localStorage.removeItem('task'+i);
+                        document.querySelector('.task-box').removeChild(wrapper);
+                        const obj = homePage(document.querySelector('section'));
+                        obj.querySelectorAll('.wrapper').forEach(divs => {
+                            for (let i = 0; i < localStorage.length; i++) {
+                                div.setAttribute('data-task', i);
+                            }
+                        });
+                        break;
+                    }
+                }
+                console.log(localStorage.length);
+                for (let j = 0; j <= localStorage.length; j++) {
+                    let prev = j - 1;
+                    if (j === 0) {
+                        prev = 0;
+                    }
+                    const k = JSON.parse(localStorage.getItem('task'+j));
+                    if (k === null) continue;
+                    console.log(j + "      " + prev + "       " + k.title);
+                    localStorage.setItem('task'+prev, JSON.stringify({"title": k.title, "description": k.description, "date": k.date, "priority": k.priority, "data-task": k["data-task"]}));
+                }
+
+                const num = localStorage.length;
+                for (let h = num - 1; h <= num - 1; h++) {
+                    localStorage.removeItem('task'+h)
+                }
+                
+            }
         });
 
         editButton.addEventListener('click', () => {
