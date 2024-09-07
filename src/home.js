@@ -9,7 +9,6 @@ export default function(section) {
     const notesCon = document.createElement('div');
     const notesH2 = document.createElement('h2');
     const li = document.querySelector('li:first-child');
-
     
     li.style.borderTop = "2px inset black";
     li.style.borderLeft = "2px inset black";
@@ -26,7 +25,8 @@ export default function(section) {
     notesCon.classList.add('notes-box');
 
     for (let i = 0; i < localStorage.length; i++) {
-        const e = JSON.parse(localStorage.getItem('task' + i)) || [];
+        const q = JSON.parse(localStorage.getItem('tasks'));
+        const e = JSON.parse(q['task'+i]) || [];
         const o = new createTask(e.title, e.description, e.date, e.priority);
         const h = o.display();
         h.setAttribute('data-task', i);

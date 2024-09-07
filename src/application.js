@@ -79,7 +79,7 @@ export class createTask {
             innerDiv.classList.toggle('complete');
         });
 
-        if (new Date(this.date).getTime() < new Date().getTime()) {
+        if ((new Date(this.dueDate).getTime() + (24 * 60 * 60 * 1000)) < new Date().getTime()) {
             innerDiv.classList.add('pastDue');
         }
 
@@ -125,6 +125,8 @@ export class createTask {
         });
 
         editButton.addEventListener('click', () => {
+
+            //absolutely needs to be refactored
             const diag = document.createElement('dialog');
             const h2 = document.createElement('h2');
             const form = document.querySelector('form');
@@ -160,7 +162,6 @@ export class createTask {
 
             const priorityIn = [r1, r2, r3];
             const inputs = [t, d, da];
-            let thePriority = "";
             
             const lastBtn = document.querySelector('form > button');
             const l = lastBtn.cloneNode();
@@ -201,7 +202,7 @@ export class createTask {
                 
                 priorityIn.forEach(rad => {
                     if (rad.checked) {
-                        thePriority = rad.value;
+                        this.priority = rad.value;
                         editButton.parentNode.querySelector('.inner > p:nth-child(6)').innerText = rad.value;
 
                         switch(rad.value) {
@@ -226,7 +227,7 @@ export class createTask {
 
                 for (let i = 0; i < localStorage.length; i++) {
                     if (i === Number(wrapper.getAttribute('data-task'))) {
-                        localStorage.setItem('task'+i, JSON.stringify({"title": t.value, "description": d.value, "date": da.value, "priority": thePriority}));
+                        localStorage.setItem('task'+i, JSON.stringify({"title": t.value, "description": d.value, "date": da.value, "priority": this.priority}));
                     }
                 }
 
@@ -278,6 +279,44 @@ export class createNote {
     constructor(title, description) {
         this.title = title;
         this.description = description;
+    }
+
+    display() {
+        const wrapper = document.createElement('div');
+        const div = document.createElement('div');
+        const innerDiv = document.createElement('div');
+        div.classList.add('task');
+        const titleP = document.createElement('h3');
+        const descP = document.createElement('p');
+        const delButton = document.createElement('button');
+        const delImg = document.createElement('img');
+        const editButton = document.createElement('button')
+        const editImg = document.createElement('img');
+
+        titleP.innerText = this.title;
+        descP.innerText = this.description;
+
+        innerDiv.classList.add('inner');
+        wrapper.classList.add('wrapper');
+        descP.classList.add('desc');
+        delButton.classList.add('icon');
+        editButton.classList.add('icon');
+        delImg.src = trash;
+        delImg.alt = "Trash bin";
+        editImg.src = edit;
+        editImg.alt = "Sketch pad to edit";
+
+        innerDiv.appendChild(titleP);
+        delButton.appendChild(delImg);
+        editButton.appendChild(editImg);
+        innerDiv.appendChild(delButton);
+        innerDiv.appendChild(editButton);
+        innerDiv.appendChild(descP);
+
+        div.appendChild(innerDiv);
+        wrapper.appendChild(div);
+
+        return wrapper;
     }
 }
 

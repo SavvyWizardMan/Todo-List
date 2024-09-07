@@ -1,28 +1,32 @@
 import "./style.css";
-import {createTask} from "./application";
-import {createProject} from "./application";
-import {createNote} from "./application";
 import homePage from "./home";
 import todayPage from "./today";
 import weekPage from "./week";
-
 import notesPage from "./notes";
+import {makeDialog} from "./util";
 
 (function() {
     const container = document.querySelector('.container');
     const section = document.querySelector('section');
     const buttons = document.querySelectorAll('li > button');
     const h1 = document.querySelector('h1');
+    const addBtn = document.querySelector('#add');
     const homeBtn = document.querySelector('#home');
     const todayBtn = document.querySelector('#today');
     const weekBtn = document.querySelector('#week');
-
     const notesBtn = document.querySelector('#notes');
     const img = document.querySelector('.wizard');
     let deg = 45;
     const d = new Date();
     const dtoString = `${d.getFullYear()}-${d.getMonth() + 1 < 10 ? "0"+(d.getMonth() + 1) : d.getMonth() + 1}-${d.getDate() < 10 ? "0"+d.getDate() : d.getDate()}`;
 
+    // localStorage.setItem('tasks', JSON.stringify([]));
+    // localStorage.setItem('notes', JSON.stringify([]));
+
+    makeDialog('Create Task', true, 'Add Task');
+    addBtn.addEventListener('click', () => {
+        document.querySelector('dialog').showModal();
+    });
     /* 
         evil wizard 
         on a real note, this would overwrite the first todo task someone made
@@ -155,6 +159,8 @@ import notesPage from "./notes";
     // });
 
     homeBtn.addEventListener('click', () => { 
+        if (document.querySelector('dialog') !== null) document.body.removeChild(document.querySelector('dialog'));
+        makeDialog('Create Task', true, 'Add Task');
         homePage(section);
     });
 
@@ -169,6 +175,8 @@ import notesPage from "./notes";
     });
 
     notesBtn.addEventListener('click', () => {
+        if (document.querySelector('dialog') !== null) document.body.removeChild(document.querySelector('dialog'));
+        makeDialog('Create Note', false, 'Add Note');
         notesPage(section);
     });
 })();

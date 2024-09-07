@@ -16,9 +16,14 @@
     </dialog>
 */
 //possibly
+import {createTask} from "./application";
+import homePage from "./home";
+import notePage from "./notes";
+
 export function makeDialog(h2Title, hasDueDate, buttonTxt) {
+    const section = document.querySelector('section');
     const dialog = document.createElement('dialog');
-    const addTaskBtn = document.querySelector('#add');
+    const addBtn = document.querySelector('#add');
     const closeBtn = document.createElement('button');
     const h2 = document.createElement('h2');
     const form = document.createElement('form');
@@ -36,10 +41,12 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
     const highInput = document.createElement('input');
     const medInput = document.createElement('input');
     const lowInput = document.createElement('input');
-    const addBtn = document.createElement('button');
+    const addTaskBtn = document.createElement('button');
 
-    const inputs = [titleInput, descInput, dateInput];
+    const inputs = [titleInput, descInput];
     const radios = [highInput, medInput, lowInput];
+
+    const buttonId = buttonTxt.split(" ").join('');
 
     closeBtn.classList.add('close');
     closeBtn.innerText = "X";
@@ -57,7 +64,7 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
     descInput.required = true;
     dateLabel.setAttribute('for', "date");
     dateLabel.innerText = "Due Date:";
-    dateInput.type = "text";
+    dateInput.type = "date";
     dateInput.id = "date";
     dateInput.required = true;
     legend.innerText = "Priority:";
@@ -82,8 +89,9 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
     lowInput.id = "low";
     lowInput.value = "low";
     lowInput.required = true;
-    addBtn.classList.add('addTask');
-    addBtn.innerText = buttonTxt;
+    addTaskBtn.innerText = buttonTxt;
+    addTaskBtn.setAttribute('type', 'button');
+    addTaskBtn.setAttribute('id', buttonId);
 
     for (let i of inputs) {
         i.addEventListener('focus', () => {
@@ -104,7 +112,8 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
         });
     }
 
-    addBtn.addEventListener('click', () => {
+    addTaskBtn.addEventListener('click', () => {
+        console.log("cliicked");
         let priority = "";
         let localLength = localStorage.length;
 
@@ -117,47 +126,67 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
                 i.previousSibling.style.left = "-65px";
             });
         }
-        let isChecked = false;
-        for (let j of radios) {
-            if (j.checked) {
-                priority = j.value;
-                isChecked = true;
-                break;
-            }      
+
+        dateInput.addEventListener('click', () => {
+            dateLabel.style.position = "relative";
+            dateLabel.style.top = "25px";
+            dateLabel.style.left = "-65px";
+        });
+
+        if (hasDueDate) {
+            if (dateInput.value === "") return;
         }
 
-        if (!isChecked) {
-            return;
+        if (hasDueDate) {
+            let isChecked = false;
+            for (let j of radios) {
+                if (j.checked) {
+                    priority = j.value;
+                    isChecked = true;
+                    break;
+                }      
+            }
+
+            if (!isChecked) {
+                return;
+            }
         }
 
         // somewhere around here I'll make it so
         // you're not teleported to home
+    
+        const arr = {};
+        switch (buttonId) {
+            case "AddTask":
+                // figure out later
+                for (let j = localLength; j <= localLength; j++) {
+                    localStorage.setItem('tasks', JSON.stringify(arr));
+                    arr['task'+j] = ({"title": titleInput.value, "description": descInput.value, "date": dateInput.value, "priority": priority});
+                }
+                homePage(section);
 
-        for (let j = localLength; j <= localLength; j++) {
-            localStorage.setItem('task'+j, JSON.stringify({"title": titleInput.value, "description": descInput.value, "date": dateInput.value, "priority": priority}));
+            break;
+            // case "AddNote":
+            //     for (let j = localLength; j <= localLength; j++) {
+            //         localStorage.setItem('note'+j, JSON.stringify({"title": titleInput.value, "description": descInput.value}));
+            //     }
+            //     notePage(section);
+
+            // break;
         }
 
-        const i = new createTask(titleInput.value, descInput.value, dateInput.value, priority);
-        const obj = i.display();
-        homePage(section);
-        
         titleInput.value = "";
         descInput.value = "";
         dateInput.value = "";
         highInput.checked = false;
         medInput.checked = false;
         lowInput.checked = false;
-        document.querySelector('fieldset').classList.remove('correct');
+        if (hasDueDate) document.querySelector('fieldset').classList.remove('correct');
         dialog.close();
     });
 
-    addTaskBtn.addEventListener('click', () => {
-        document.body.insertBefore(dialog, document.querySelector('img'));
-        dialog.showModal();
-        console.log('clicked');
-    });
-
     closeBtn.addEventListener('click', () => {
+        console.log(dialog);
         dialog.close();
     });
 
@@ -180,9 +209,11 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
         form.appendChild(fieldset);
     }
 
-    form.appendChild(addBtn);
+    form.appendChild(addTaskBtn);
 
     dialog.appendChild(closeBtn);
     dialog.appendChild(h2);
     dialog.appendChild(form);
+
+    document.body.insertBefore(dialog, document.querySelector('img'));
 }
