@@ -23,10 +23,15 @@ export default function(section) {
 
     notesH2.innerText = "Notes:";
     notesCon.classList.add('notes-box');
+    let localLength = 0;
 
-    for (let i = 0; i < localStorage.length; i++) {
+    if (JSON.parse(localStorage.getItem('tasks')) !== null) {
+        localLength = Object.keys(JSON.parse(localStorage.getItem('tasks')));
+    }
+
+    for (let i = 0; i < localLength.length; i++) {
         const q = JSON.parse(localStorage.getItem('tasks'));
-        const e = JSON.parse(q['task'+i]) || [];
+        const e = q['task'+i] || [];
         const o = new createTask(e.title, e.description, e.date, e.priority);
         const h = o.display();
         h.setAttribute('data-task', i);

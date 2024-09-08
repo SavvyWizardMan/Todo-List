@@ -20,9 +20,6 @@ import {makeDialog} from "./util";
     const d = new Date();
     const dtoString = `${d.getFullYear()}-${d.getMonth() + 1 < 10 ? "0"+(d.getMonth() + 1) : d.getMonth() + 1}-${d.getDate() < 10 ? "0"+d.getDate() : d.getDate()}`;
 
-    // localStorage.setItem('tasks', JSON.stringify([]));
-    // localStorage.setItem('notes', JSON.stringify([]));
-
     makeDialog('Create Task', true, 'Add Task');
     addBtn.addEventListener('click', () => {
         document.querySelector('dialog').showModal();

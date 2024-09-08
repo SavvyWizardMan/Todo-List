@@ -115,7 +115,6 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
     addTaskBtn.addEventListener('click', () => {
         console.log("cliicked");
         let priority = "";
-        let localLength = localStorage.length;
 
         for (let i of inputs) {
             if (i.value === "") return;
@@ -155,13 +154,20 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
         // somewhere around here I'll make it so
         // you're not teleported to home
     
-        const arr = {};
+        let arr = {};
+
+        if (JSON.parse(localStorage.getItem('tasks')) !== null) {
+            arr = JSON.parse(localStorage.getItem('tasks'));
+        }
         switch (buttonId) {
             case "AddTask":
                 // figure out later
-                for (let j = localLength; j <= localLength; j++) {
+                let localLength = Object.keys(arr);
+                console.log(localLength);
+                for (let j = localLength.length; j <= localLength.length; j++) {
+                    console.log('rain');
+                    arr['task'+j] = {"title": titleInput.value, "description": descInput.value, "date": dateInput.value, "priority": priority};
                     localStorage.setItem('tasks', JSON.stringify(arr));
-                    arr['task'+j] = ({"title": titleInput.value, "description": descInput.value, "date": dateInput.value, "priority": priority});
                 }
                 homePage(section);
 

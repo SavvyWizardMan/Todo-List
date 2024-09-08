@@ -92,34 +92,35 @@ export class createTask {
 
         delButton.addEventListener('click', () => {
             const con = confirm("Are you sure?");
-            const local = localStorage.length;
+            const local = Object.keys(JSON.parse(localStorage.getItem('tasks'))).length;
+            const arr = JSON.parse(localStorage.getItem('tasks'));
 
             if (con) {
+                console.log(local);
                 let index = 0;
-                for (let i = 0; i < localStorage.length; i++) {
+                for (let i = 0; i < local; i++) {
                     index = i;
                     if (i === Number(wrapper.getAttribute('data-task'))) {
-                        localStorage.removeItem('task'+i);
+                        delete arr['task'+i];
                         document.querySelector('.task-box').removeChild(wrapper);
                         break;
                     }
                 }
-                if (localStorage.length === 0) return;
+                if (local === 0) return;
+                console.log(index);
+                console.log(local);
 
-                let atEnd = false;
-
-                for (let j = index; j < localStorage.length; j++) {
+                for (let j = index; j < local; j++) {
                     let ahead = j + 1;
-                    const o = JSON.parse(localStorage.getItem('task'+ahead));
-                    if (o === null) break;
-                    localStorage.setItem('task'+j, JSON.stringify({"title": o.title, "description": o.description, "date": o.date, "priority": o.priority}));
+                    const o = arr['task'+ahead];
+                    if (o === null || o === undefined) break;
+                    arr['task'+j] = {"title": o.title, "description": o.description, "date": o.date, "priority": o.priority};
                 }
 
                 for (let h = local - 1; h < local; h++) {
-                    if (local === 0) break;
-                    localStorage.removeItem('task'+h);
+                    delete arr['task'+h];
                 }
-
+                localStorage.setItem('tasks', JSON.stringify(arr));
                 homePage(document.querySelector('section'));
             }
         });
@@ -225,11 +226,13 @@ export class createTask {
                     }
                 });
 
+                const arr = JSON.parse(localStorage.getItem('tasks'));
                 for (let i = 0; i < localStorage.length; i++) {
                     if (i === Number(wrapper.getAttribute('data-task'))) {
-                        localStorage.setItem('task'+i, JSON.stringify({"title": t.value, "description": d.value, "date": da.value, "priority": this.priority}));
+                        arr['task'+i] = {"title": t.value, "description": d.value, "date": da.value, "priority": this.priority};
                     }
                 }
+                localStorage.setItem('tasks', JSON.stringify(arr));
 
                 this.display();
                 diag.close();
