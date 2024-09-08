@@ -7,10 +7,15 @@ export default function(section) {
 
     notesH2.innerText = "Notes:";
     notesCon.classList.add('notes-box');
+    let localLength = 0;
 
-    for (let i = 0; i < localStorage.length; i++) {
-        const e = JSON.parse(localStorage.getItem('note' + i)) || [];
-        if (e.length === 0) break;
+    if (JSON.parse(localStorage.getItem('notes')) !== null) {
+        localLength = Object.keys(JSON.parse(localStorage.getItem('notes')));
+    }
+
+    for (let i = 0; i < localLength.length; i++) {
+        const q = JSON.parse(localStorage.getItem('notes'));
+        const e = q['note'+i] || [];
         const o = new createNote(e.title, e.description);
         const h = o.display();
         h.setAttribute('data-note', i);

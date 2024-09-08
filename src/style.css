@@ -40,7 +40,7 @@ h1:hover {
     }
 }
 
-.task-box, .proj-box, .notes-box {
+.task-box, .project-box, .notes-box {
     height: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
