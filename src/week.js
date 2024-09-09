@@ -3,7 +3,7 @@ import createProject  from "./application";
 import template from "./application";
 
 export default function(section) {
-    const taskCon = template(section);
+    const taskCon = template(section)[0];
     
     const t = new Date();
 

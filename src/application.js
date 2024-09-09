@@ -92,7 +92,7 @@ export class createTask {
         delButton.addEventListener('click', () => {
             const con = confirm("Are you sure?");
 
-            if (con) deleteThing('task');
+            if (con) deleteThing('task', wrapper);
         });
 
         editButton.addEventListener('click', () => editThing(this, this.title, this.description, this.dueDate, this.priority, 'task', editButton, wrapper));
@@ -106,12 +106,40 @@ export class createTask {
 
 export class createProject {
 
-    constructor(title) {
+    constructor(title, description) {
         this.title = title;
+        this.description = description;
     }
 
-    projectTask() {
+    display() {
+        const wrapper = document.createElement('div');
+        const div = document.createElement('div');
+        const flipDiv = document.createElement('div');
+        const p = document.createElement('p');
+        const p2 = document.createElement('p');
+        const li = document.createElement('li');
+        const projectsCon = document.querySelector('.projects');
+        const innerDiv = document.createElement('div');
+        div.classList.add('task');
+        const titleP = document.createElement('h3');
+        
+        wrapper.classList.add('wrapper');
+        innerDiv.classList.add('inner');
+        flipDiv.classList.add('flip');
+        titleP.innerText = this.title;
+        li.innerText = this.title;
+        p.innerText = this.description;
+        p2.innerText = "fdjak;lfjd";
 
+        flipDiv.appendChild(p2);
+        projectsCon.appendChild(li);
+        innerDiv.appendChild(titleP);
+        innerDiv.appendChild(p);
+        div.appendChild(flipDiv);
+        div.appendChild(innerDiv);
+        wrapper.appendChild(div);
+
+        return wrapper;
     } 
 }
 
@@ -159,7 +187,7 @@ export class createNote {
         delButton.addEventListener('click', () => {
             const con = confirm("Are you sure?");
 
-            if (con) deleteThing('note');
+            if (con) deleteThing('note', wrapper);
         });
 
         editButton.addEventListener('click', () => editThing(this, this.title, this.description, "", "", 'note', editButton, wrapper));
@@ -175,16 +203,15 @@ export default function(section) {
     const taskH2 = document.createElement('h2');
     const projectsH2 = document.createElement('h2');
     const projCon = document.createElement('div');
+    projCon.classList.add('project-box');
 
     taskH2.innerText = "Tasks:";
     projectsH2.innerText = "Projects:";
-    projCon.classList.add('project-box');
 
     section.appendChild(taskH2);
     section.appendChild(taskCon);
     section.appendChild(projectsH2);
     section.appendChild(projCon);
-    section.appendChild(projCon);
 
-    return taskCon;
+    return [taskCon, projCon];
 }

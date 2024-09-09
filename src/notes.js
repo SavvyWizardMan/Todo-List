@@ -6,7 +6,7 @@ export default function(section) {
     const notesH2 = document.createElement('h2');
 
     notesH2.innerText = "Notes:";
-    notesCon.classList.add('notes-box');
+    notesCon.classList.add('note-box');
     let localLength = 0;
 
     if (JSON.parse(localStorage.getItem('notes')) !== null) {

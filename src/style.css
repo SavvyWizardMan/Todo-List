@@ -40,7 +40,7 @@ h1:hover {
     }
 }
 
-.task-box, .project-box, .notes-box {
+.task-box, .project-box, .note-box {
     height: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -304,6 +304,9 @@ ul > li:last-child:hover #add {
 
 .no-hover {
     padding: 8px 24px;
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
 li > button {
@@ -365,8 +368,56 @@ input:valid, .correct {
     position: relative;
 }
 
+.flip {
+    background-color: white;
+    width: inherit;
+    padding: 16px;
+    overflow-y: hidden;
+    height: inherit;
+    border-radius: inherit;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    transform-style: preserve-3d;
+    transform: perspective(300px);
+    transition: all 0.5s;
+}
+
+.flip > * {
+    transform: scaleX(-1);
+}
+
+.project-box .inner {
+    transform-style: preserve-3d;
+    transform: perspective(300px);
+    transition: all 0.5s;
+}
+
+.wrapper:hover .flip {
+    z-index: 4;
+    overflow-y: scroll;
+}
+
+.project-box > .wrapper:hover .inner {
+    z-index: 1;
+    overflow-y: hidden;
+}
+
+.project-box > .wrapper:hover .inner, .wrapper:hover .flip {
+    transform: rotateX(5deg) rotateY(180deg);
+}
+
 .wrapper:hover .task{
     transform: rotateY(20deg) rotateX(20deg);
+}
+
+#addProj {
+    width: fit-content;
+    height: auto;
+    position: absolute;
+    right: -12px;
+    top: 2px;
 }
 
 .inner {
@@ -384,6 +435,7 @@ input:valid, .correct {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     align-items: start;
+    z-index: 3;
 }
 
 .task::before, .task::after {

@@ -4,12 +4,14 @@ import todayPage from "./today";
 import weekPage from "./week";
 import notesPage from "./notes";
 import {makeDialog} from "./util";
+import projectPage from "./projects";
 
 (function() {
     const container = document.querySelector('.container');
     const section = document.querySelector('section');
-    const buttons = document.querySelectorAll('li > button');
+    const buttons = document.querySelectorAll('li > button:not(#addProj)');
     const h1 = document.querySelector('h1');
+    const addProj = document.querySelector('#addProj');
     const addBtn = document.querySelector('#add');
     const homeBtn = document.querySelector('#home');
     const todayBtn = document.querySelector('#today');
@@ -23,6 +25,12 @@ import {makeDialog} from "./util";
     makeDialog('Create Task', true, 'Add Task');
     addBtn.addEventListener('click', () => {
         document.querySelector('dialog').showModal();
+    });
+
+    addProj.addEventListener('click', () => {
+        makeDialog('Create Project', false, 'Add Project');
+        document.querySelector('dialog').showModal();
+        homePage(section);
     });
     /* 
         evil wizard 
@@ -156,7 +164,6 @@ import {makeDialog} from "./util";
     // });
 
     homeBtn.addEventListener('click', () => { 
-        if (document.querySelector('dialog') !== null) document.body.removeChild(document.querySelector('dialog'));
         makeDialog('Create Task', true, 'Add Task');
         homePage(section);
     });
@@ -172,7 +179,6 @@ import {makeDialog} from "./util";
     });
 
     notesBtn.addEventListener('click', () => {
-        if (document.querySelector('dialog') !== null) document.body.removeChild(document.querySelector('dialog'));
         makeDialog('Create Note', false, 'Add Note');
         notesPage(section);
     });

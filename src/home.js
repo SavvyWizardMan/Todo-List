@@ -4,8 +4,9 @@ import {createNote} from "./application";
 import template from "./application";
 
 export default function(section) {
-    const taskCon = template(section);
-   
+    const temp = template(section);
+    const taskCon = temp[0];
+    const projCon = temp[1];
     const notesCon = document.createElement('div');
     const notesH2 = document.createElement('h2');
     const li = document.querySelector('li:first-child');
@@ -22,7 +23,7 @@ export default function(section) {
     });
 
     notesH2.innerText = "Notes:";
-    notesCon.classList.add('notes-box');
+    notesCon.classList.add('note-box');
     let localLength = 0;
 
     if (JSON.parse(localStorage.getItem('tasks')) !== null) {
@@ -37,6 +38,13 @@ export default function(section) {
         h.setAttribute('data-task', i);
         taskCon.appendChild(h);
     }
+
+    localLength = 0;
+
+    const o = new createProject('title', "description");
+    const h = o.display();
+
+    projCon.appendChild(h);
 
     localLength = 0;
 
@@ -55,7 +63,5 @@ export default function(section) {
 
     section.appendChild(notesH2);
     section.appendChild(notesCon);
-    
-    return taskCon;    
 };
 

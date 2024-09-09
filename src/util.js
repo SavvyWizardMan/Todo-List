@@ -21,6 +21,7 @@ import homePage from "./home";
 import notePage from "./notes";
 
 export function makeDialog(h2Title, hasDueDate, buttonTxt) {
+    if (document.querySelector('dialog') !== null) document.body.removeChild(document.querySelector('dialog'));
     const section = document.querySelector('section');
     const dialog = document.createElement('dialog');
     const addBtn = document.querySelector('#add');
@@ -226,9 +227,9 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
     document.body.insertBefore(dialog, document.querySelector('img'));
 }
 
-export function deleteThing(localName) {
-    const local = Object.keys(JSON.parse(localStorage.getItem(localName))).length;
-    const arr = JSON.parse(localStorage.getItem(localName));
+export function deleteThing(localName, wrapper) {
+    const local = Object.keys(JSON.parse(localStorage.getItem(localName+'s'))).length;
+    const arr = JSON.parse(localStorage.getItem(localName+'s'));
     let index = 0;
         for (let i = 0; i < local; i++) {
             index = i;
