@@ -18,6 +18,7 @@
 //possibly
 import {createTask} from "./application";
 import homePage from "./home";
+import projectPage from "./projects";
 import notePage from "./notes";
 
 export function makeDialog(h2Title, hasDueDate, buttonTxt) {
@@ -155,6 +156,8 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
         // you're not teleported to home
     
         let arr = {};
+        let arr2 = {};
+        let arr2Tasks = {};
         let arr3 = {};
 
         
@@ -171,6 +174,35 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
                     localStorage.setItem('tasks', JSON.stringify(arr));
                 }
                 homePage(section);
+            break;
+            case "AddProject":
+                if (JSON.parse(localStorage.getItem('projects')) !== null) {
+                    arr2 = JSON.parse(localStorage.getItem('projects'));
+                }
+
+                localLength = Object.keys(arr2);
+                for (let j = localLength.length; j <= localLength.length; j++) {
+                    arr2['project'+j] = {"title": titleInput.value, "description": descInput.value, "tasks": {}};
+                    localStorage.setItem('projects', JSON.stringify(arr2));
+                }
+                homePage(section);
+            break;
+            case "AddProjectTask":
+                if (JSON.parse(localStorage.getItem('projects')) !== null || JSON.parse(localStorage.getItem('projects')) !== undefined) {
+                    arr2 = JSON.parse(localStorage.getItem('projects'));                    
+                }
+
+                localLength = Object.keys(arr2) - 1;
+                for (let j = localLength.length; j <= localLength.length; j++) {
+                    arr2Tasks = arr2['project'+j]['tasks'];
+                    for (let k = Object.keys(arr2Tasks).length; k <= Object.keys(arr2Tasks).length; k++) {
+                        arr2Tasks['task'+k] = {"title": titleInput.value, "description": descInput.value, "date": dateInput.value, "priority": priority};
+                    }
+                    arr2['project'+j]['tasks'] = arr2Tasks;
+                    
+                    localStorage.setItem('projects', JSON.stringify(arr2));
+                }
+                projectPage(section);
             break;
             case "AddNote":
                 if (JSON.parse(localStorage.getItem('notes')) !== null) {

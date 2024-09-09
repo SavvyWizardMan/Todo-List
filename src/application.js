@@ -2,6 +2,7 @@ import trash from "./trash.svg";
 import edit from "./notes.svg";
 import {deleteThing} from "./util";
 import {editThing} from "./util";
+import { makeDialog } from "./util";
 
 export class createTask {
     constructor(title, description, dueDate, priority){
@@ -114,33 +115,79 @@ export class createProject {
     display() {
         const wrapper = document.createElement('div');
         const div = document.createElement('div');
-        const flipDiv = document.createElement('div');
-        const p = document.createElement('p');
-        const p2 = document.createElement('p');
+        const descP = document.createElement('p');
         const li = document.createElement('li');
+        const buttonLi = document.createElement('button');
         const projectsCon = document.querySelector('.projects');
         const innerDiv = document.createElement('div');
         div.classList.add('task');
         const titleP = document.createElement('h3');
+        const allLis = document.querySelectorAll('.projects > li');
+
+        for (let i = allLis.length; i <= allLis.length; i++) {
+            buttonLi.setAttribute('id', i);
+        }
+
+        document.querySelectorAll('li > button:not(#addProj)').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll(`li:not(li:last-child)`).forEach(li => {
+                    li.childNodes.forEach(child => {
+                        if (child.id === button.id) {
+                            li.style.borderTop = "2px inset black";
+                            li.style.borderLeft = "2px inset black";
+                            li.style.borderRight = "2px inset black";
+                            li.style.background = "#bbb";
+                            document.querySelector('li:first-child').style.borderTopLeftRadius = "8px";
+                        } else {
+                            li.style.border = "none";
+                            li.style.background = "none";
+                            li.style.borderBottom = "2px solid black";
+                        }
+                    });
+                });
+            });
+        });
         
         wrapper.classList.add('wrapper');
         innerDiv.classList.add('inner');
-        flipDiv.classList.add('flip');
         titleP.innerText = this.title;
-        li.innerText = this.title;
-        p.innerText = this.description;
-        p2.innerText = "fdjak;lfjd";
+        buttonLi.innerText = this.title;
+        descP.innerText = this.description;
 
-        flipDiv.appendChild(p2);
-        projectsCon.appendChild(li);
+        buttonLi.addEventListener('click', () => {
+            makeDialog("Create Project Task", true, "Add Project Task");
+            const section = document.querySelector('section');
+            const flipDiv = this.displayFlip();
+            section.innerHTML = "";
+
+            const proj = document.createElement('h2');
+            const projectCon = document.createElement('div');
+            projectCon.classList.add('project-box');
+            proj.innerText = "Project:";
+            
+            div.appendChild(innerDiv);
+            div.appendChild(flipDiv);
+            wrapper.appendChild(div);
+            projectCon.appendChild(wrapper);
+            section.appendChild(proj);
+            section.appendChild(projectCon);
+        });
+        li.appendChild(buttonLi);
         innerDiv.appendChild(titleP);
-        innerDiv.appendChild(p);
-        div.appendChild(flipDiv);
+        innerDiv.appendChild(descP);
         div.appendChild(innerDiv);
         wrapper.appendChild(div);
 
-        return wrapper;
-    } 
+        return [wrapper, li];
+    }
+
+    displayFlip() {
+        const flipDiv = document.createElement('div');
+
+        flipDiv.classList.add('flip');
+
+        return flipDiv;
+    }
 }
 
 export class createNote {

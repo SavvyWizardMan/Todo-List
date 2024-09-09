@@ -41,10 +41,45 @@ export default function(section) {
 
     localLength = 0;
 
-    const o = new createProject('title', "description");
-    const h = o.display();
+    if (JSON.parse(localStorage.getItem('projects')) !== null) {
+        localLength = Object.keys(JSON.parse(localStorage.getItem('projects')));
+    }
 
-    projCon.appendChild(h);
+    for (let i = 0; i < localLength.length; i++) {
+        const q = JSON.parse(localStorage.getItem('projects'));
+        const e = q['project'+i];
+        const o = new createProject(e.title, e.description);
+        const g = o.display();
+        const h = g[0];
+        const li = g[1];
+        li.setAttribute('data-project', i);
+
+        let isThere = false;    
+        document.querySelectorAll('.projects > li').forEach(list => {
+            if (list.getAttribute('data-project') === li.getAttribute('data-project')) {
+              isThere = true;  
+            }
+        });
+        if (!isThere) {
+            document.querySelector('.projects').appendChild(li);
+        }
+
+        const flipDiv = o.displayFlip();
+        projCon.appendChild(h);
+        h.firstChild.appendChild(flipDiv);
+        if (Object.keys(e['tasks']).length === 0) {
+            const p = document.createElement('p');
+            p.classList.add('theNoTask');
+            p.innerText = "No tasks for this project!";
+            flipDiv.appendChild(p);
+            break;
+        }
+        for (const j in e['tasks']) {
+            const o = new createTask(j.title, j.description, j.dueDate, j.priority);
+            const h = o.display();
+            flipDiv.appendChild(h);
+        }
+    }
 
     localLength = 0;
 

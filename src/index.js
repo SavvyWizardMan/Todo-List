@@ -114,21 +114,6 @@ import projectPage from "./projects";
                     }
                 });
             });
-            document.querySelectorAll('.projects > li').forEach(li => {
-                li.childNodes.forEach(child => {
-                    if (child.id === button.id) {
-                        li.style.borderTop = "2px inset black";
-                        li.style.borderLeft = "2px inset black";
-                        li.style.borderRight = "2px inset black";
-                        li.style.background = "#bbb";
-                        document.querySelector('li:first-child').style.borderTopLeftRadius = "8px";
-                    } else {
-                        li.style.border = "none";
-                        li.style.background = "none";
-                        li.style.borderBottom = "2px solid black";
-                    }
-                });
-            });
         });
     });
     
