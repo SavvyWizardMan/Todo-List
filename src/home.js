@@ -44,7 +44,6 @@ export default function(section) {
     if (JSON.parse(localStorage.getItem('projects')) !== null) {
         localLength = Object.keys(JSON.parse(localStorage.getItem('projects')));
     }
-
     for (let i = 0; i < localLength.length; i++) {
         const q = JSON.parse(localStorage.getItem('projects'));
         const e = q['project'+i];
@@ -53,26 +52,21 @@ export default function(section) {
         const h = g[0];
         const li = g[1];
         li.setAttribute('data-project', i);
-
-        let isThere = false;    
+        let isThere = false;
         document.querySelectorAll('.projects > li').forEach(list => {
             if (list.getAttribute('data-project') === li.getAttribute('data-project')) {
-              isThere = true;  
+                isThere = true;
             }
         });
-        if (!isThere) {
-            document.querySelector('.projects').appendChild(li);
-        }
-
+        if (!isThere) document.querySelector('.projects').appendChild(li);
         const flipDiv = o.displayFlip();
-        projCon.appendChild(h);
         h.firstChild.appendChild(flipDiv);
+        projCon.appendChild(h);
         if (Object.keys(e['tasks']).length === 0) {
             const p = document.createElement('p');
             p.classList.add('theNoTask');
             p.innerText = "No tasks for this project!";
             flipDiv.appendChild(p);
-            break;
         }
         for (const j in e['tasks']) {
             const o = new createTask(j.title, j.description, j.dueDate, j.priority);

@@ -187,6 +187,9 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
                 }
                 homePage(section);
             break;
+            // we dont even know what project to assign the tasks obj to
+            // because we can change what project were on through tabs
+            // must be changed to accomodate this
             case "AddProjectTask":
                 if (JSON.parse(localStorage.getItem('projects')) !== null || JSON.parse(localStorage.getItem('projects')) !== undefined) {
                     arr2 = JSON.parse(localStorage.getItem('projects'));                    

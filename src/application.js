@@ -118,35 +118,9 @@ export class createProject {
         const descP = document.createElement('p');
         const li = document.createElement('li');
         const buttonLi = document.createElement('button');
-        const projectsCon = document.querySelector('.projects');
         const innerDiv = document.createElement('div');
         div.classList.add('task');
         const titleP = document.createElement('h3');
-        const allLis = document.querySelectorAll('.projects > li');
-
-        for (let i = allLis.length; i <= allLis.length; i++) {
-            buttonLi.setAttribute('id', i);
-        }
-
-        document.querySelectorAll('li > button:not(#addProj)').forEach(button => {
-            button.addEventListener('click', () => {
-                document.querySelectorAll(`li:not(li:last-child)`).forEach(li => {
-                    li.childNodes.forEach(child => {
-                        if (child.id === button.id) {
-                            li.style.borderTop = "2px inset black";
-                            li.style.borderLeft = "2px inset black";
-                            li.style.borderRight = "2px inset black";
-                            li.style.background = "#bbb";
-                            document.querySelector('li:first-child').style.borderTopLeftRadius = "8px";
-                        } else {
-                            li.style.border = "none";
-                            li.style.background = "none";
-                            li.style.borderBottom = "2px solid black";
-                        }
-                    });
-                });
-            });
-        });
         
         wrapper.classList.add('wrapper');
         innerDiv.classList.add('inner');
