@@ -195,10 +195,11 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
                     arr2 = JSON.parse(localStorage.getItem('projects'));                    
                 }
 
-                localLength = Object.keys(arr2) - 1;
-                for (let j = localLength.length; j <= localLength.length; j++) {
+                localLength = Object.keys(arr2);
+                for (let j = localLength.length - 1; j <= localLength.length - 1; j++) {
                     arr2Tasks = arr2['project'+j]['tasks'];
-                    for (let k = Object.keys(arr2Tasks).length; k <= Object.keys(arr2Tasks).length; k++) {
+                    const o = Object.keys(arr2Tasks);
+                    for (let k = o.length; k <= o.length; k++) {
                         arr2Tasks['task'+k] = {"title": titleInput.value, "description": descInput.value, "date": dateInput.value, "priority": priority};
                     }
                     arr2['project'+j]['tasks'] = arr2Tasks;
