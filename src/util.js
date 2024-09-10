@@ -21,7 +21,7 @@ import homePage from "./home";
 import projectPage from "./projects";
 import notePage from "./notes";
 
-export function makeDialog(h2Title, hasDueDate, buttonTxt) {
+export function makeDialog(h2Title, hasDueDate, buttonTxt, li="") {
     if (document.querySelector('dialog') !== null) document.body.removeChild(document.querySelector('dialog'));
     const section = document.querySelector('section');
     const dialog = document.createElement('dialog');
@@ -157,7 +157,6 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
     
         let arr = {};
         let arr2 = {};
-        let arr2Tasks = {};
         let arr3 = {};
 
         
@@ -197,19 +196,13 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
                 if (JSON.parse(localStorage.getItem('projects')) !== null || JSON.parse(localStorage.getItem('projects')) !== undefined) {
                     arr2 = JSON.parse(localStorage.getItem('projects'));                    
                 }
-
-                localLength = Object.keys(arr2);
-                for (let j = localLength.length - 1; j <= localLength.length - 1; j++) {
-                    arr2Tasks = arr2['project'+j]['tasks'];
-                    const o = Object.keys(arr2Tasks);
-                    for (let k = o.length; k <= o.length; k++) {
-                        arr2Tasks['task'+k] = {"title": titleInput.value, "description": descInput.value, "date": dateInput.value, "priority": priority};
-                    }
-                    arr2['project'+j]['tasks'] = arr2Tasks;
-                    
+                localLength = Object.keys(arr2['project'+li.getAttribute('data-list')]['tasks']);
+                for (let j = localLength.length; j <= localLength.length; j++) {
+                    arr2['project'+li.getAttribute('data-list')]['tasks']['task'+j] = {"title": titleInput.value, "description": descInput.value, "date": dateInput.value, "priority": priority};
                     localStorage.setItem('projects', JSON.stringify(arr2));
                 }
-                projectPage(section);
+                
+                projectPage(section, li);
             break;
             case "AddNote":
                 if (JSON.parse(localStorage.getItem('notes')) !== null) {

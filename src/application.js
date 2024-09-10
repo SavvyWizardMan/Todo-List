@@ -3,6 +3,8 @@ import edit from "./notes.svg";
 import {deleteThing} from "./util";
 import {editThing} from "./util";
 import { makeDialog } from "./util";
+import homePage from "./home";
+import projectPage from "./projects";
 
 export class createTask {
     constructor(title, description, dueDate, priority){
@@ -128,45 +130,16 @@ export class createProject {
         buttonLi.innerText = this.title;
         descP.innerText = this.description;
 
-        buttonLi.addEventListener('click', () => {
-            makeDialog("Create Project Task", true, "Add Project Task");
-            const section = document.querySelector('section');
-            section.innerHTML = "";
-
-            const proj = document.createElement('h2');
-            const projectCon = document.createElement('div');
-            projectCon.classList.add('project-box');
-            proj.innerText = "Project:";
-
-            for (let i = li.getAttribute('data-list'); i <= li.getAttribute('data-list'); i++) {
-                const q = JSON.parse(localStorage.getItem('projects'));
-                const e = q['project'+li.getAttribute('data-list')] || [];
-                const o = new createProject(e.title, e.description);
-                const g = o.display();
-                const flipDiv = o.displayFlip();
-                const h = g[0];
-                const lis = g[1];
-                let isThere = false;
-                document.querySelectorAll('.projects > li').forEach(listI => {
-                    if (lis.getAttribute('data-list') === listI.getAttribute('data-list')) {
-                        isThere = true;
-                    }
-                });
-                if (!isThere) {
-                    document.querySelector('.projects').appendChild(lis);
-                }
-                projectCon.appendChild(h);
-                h.firstChild.appendChild(flipDiv);
-            }
-
-            section.appendChild(proj);
-            section.appendChild(projectCon);
-        });
         li.appendChild(buttonLi);
         innerDiv.appendChild(titleP);
         innerDiv.appendChild(descP);
         div.appendChild(innerDiv);
         wrapper.appendChild(div);
+
+        buttonLi.addEventListener('click', () => {
+            makeDialog("Create Project Task", true, "Add Project Task", li);
+            projectPage(document.querySelector('section'), li);
+        });
 
         return [wrapper, li];
     }
