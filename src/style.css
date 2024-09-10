@@ -309,6 +309,8 @@ ul > li:last-child:hover #add {
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 180px;
 }
 
 li > button {
@@ -398,6 +400,7 @@ input:valid, .correct {
     transform-style: preserve-3d;
     transform: perspective(300px);
     transition: all 0.5s;
+    z-index: 3;
 }
 
 .wrapper:hover .flip {
@@ -450,7 +453,6 @@ input:valid, .correct {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     align-items: start;
-    z-index: 3;
 }
 
 .task:not(.project-box .flip .task)::before, .task:not(.project-box .flip .task)::after {

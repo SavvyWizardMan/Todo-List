@@ -44,39 +44,92 @@ export default function(section) {
     if (JSON.parse(localStorage.getItem('projects')) !== null) {
         localLength = Object.keys(JSON.parse(localStorage.getItem('projects')));
     }
+
     for (let i = 0; i < localLength.length; i++) {
         const q = JSON.parse(localStorage.getItem('projects'));
-        const e = q['project'+0] || [];
+        const e = q['project'+i] || [];
         const o = new createProject(e.title, e.description);
         const g = o.display();
+        const flipDiv = o.displayFlip();
         const h = g[0];
-        const li = g[1];
-        li.setAttribute('data-project', i);
+        const lis = g[1];
+        lis.setAttribute('data-list', i);
+        lis.querySelector('button').setAttribute('id', i+2);
         let isThere = false;
-        document.querySelectorAll('.projects > li').forEach(list => {
-            if (list.getAttribute('data-project') === li.getAttribute('data-project')) {
+        document.querySelectorAll('.projects > li').forEach(listI => {
+            if (lis.getAttribute('data-list') === listI.getAttribute('data-list')) {
                 isThere = true;
             }
         });
-        if (!isThere) document.querySelector('.projects').appendChild(li);
-        const flipDiv = o.displayFlip();
+        if (!isThere) {
+            document.querySelector('.projects').appendChild(lis);
+        }
+        h.setAttribute('data-project', i);
         projCon.appendChild(h);
+
         h.firstChild.appendChild(flipDiv);
-        if (Object.keys(e['tasks']).length === 0) {
-            const p = document.createElement('p');
-            p.classList.add('theNoTask');
-            p.innerText = "No tasks for this project!";
-            flipDiv.appendChild(p);
-            continue;
-        }
-        const len = Object.keys(e['tasks']).length;
-        const z = e['tasks']['task0'];
-        for (let i = len - 1; i <= len - 1; i++) {
-            const o = new createTask(z.title, z.description, z.date, z.priority);
-            const h = o.display();
-            flipDiv.appendChild(h);
-        }
     }
+
+    const buttons = document.querySelectorAll('li > button:not(#addProj)');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll(`li:not(ul > li:last-child)`).forEach(li => {
+                li.childNodes.forEach(child => {
+                    if (child.id === button.id) {
+                        li.style.borderTop = "2px inset black";
+                        li.style.borderLeft = "2px inset black";
+                        li.style.borderRight = "2px inset black";
+                        li.style.background = "#bbb";
+                        document.querySelector('li:first-child').style.borderTopLeftRadius = "8px";
+                    } else {
+                        li.style.border = "none";
+                        li.style.background = "none";
+                        li.style.borderBottom = "2px solid black";
+                    }
+                });
+            });
+        });
+    });
+
+    // localLength = 0;
+
+    // if (JSON.parse(localStorage.getItem('projects')) !== null) {
+    //     localLength = Object.keys(JSON.parse(localStorage.getItem('projects')));
+    // }
+    // for (let i = 0; i < localLength.length; i++) {
+    //     const q = JSON.parse(localStorage.getItem('projects'));
+    //     const e = q['project'+0] || [];
+    //     const o = new createProject(e.title, e.description);
+    //     const g = o.display();
+    //     const h = g[0];
+    //     const li = g[1];
+    //     li.setAttribute('data-project', i);
+    //     let isThere = false;
+    //     document.querySelectorAll('.projects > li').forEach(list => {
+    //         if (list.getAttribute('data-project') === li.getAttribute('data-project')) {
+    //             isThere = true;
+    //         }
+    //     });
+    //     if (!isThere) document.querySelector('.projects').appendChild(li);
+    //     const flipDiv = o.displayFlip();
+    //     projCon.appendChild(h);
+    //     h.firstChild.appendChild(flipDiv);
+    //     if (Object.keys(e['tasks']).length === 0) {
+    //         const p = document.createElement('p');
+    //         p.classList.add('theNoTask');
+    //         p.innerText = "No tasks for this project!";
+    //         flipDiv.appendChild(p);
+    //         continue;
+    //     }
+    //     const len = Object.keys(e['tasks']).length;
+    //     const z = e['tasks']['task0'];
+    //     for (let i = len - 1; i <= len - 1; i++) {
+    //         const o = new createTask(z.title, z.description, z.date, z.priority);
+    //         const h = o.display();
+    //         flipDiv.appendChild(h);
+    //     }
+    // }
 
     localLength = 0;
 

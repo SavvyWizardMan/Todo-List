@@ -131,18 +131,34 @@ export class createProject {
         buttonLi.addEventListener('click', () => {
             makeDialog("Create Project Task", true, "Add Project Task");
             const section = document.querySelector('section');
-            const flipDiv = this.displayFlip();
             section.innerHTML = "";
 
             const proj = document.createElement('h2');
             const projectCon = document.createElement('div');
             projectCon.classList.add('project-box');
             proj.innerText = "Project:";
-            
-            div.appendChild(innerDiv);
-            div.appendChild(flipDiv);
-            wrapper.appendChild(div);
-            projectCon.appendChild(wrapper);
+
+            for (let i = li.getAttribute('data-list'); i <= li.getAttribute('data-list'); i++) {
+                const q = JSON.parse(localStorage.getItem('projects'));
+                const e = q['project'+li.getAttribute('data-list')] || [];
+                const o = new createProject(e.title, e.description);
+                const g = o.display();
+                const flipDiv = o.displayFlip();
+                const h = g[0];
+                const lis = g[1];
+                let isThere = false;
+                document.querySelectorAll('.projects > li').forEach(listI => {
+                    if (lis.getAttribute('data-list') === listI.getAttribute('data-list')) {
+                        isThere = true;
+                    }
+                });
+                if (!isThere) {
+                    document.querySelector('.projects').appendChild(lis);
+                }
+                projectCon.appendChild(h);
+                h.firstChild.appendChild(flipDiv);
+            }
+
             section.appendChild(proj);
             section.appendChild(projectCon);
         });

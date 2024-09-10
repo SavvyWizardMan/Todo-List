@@ -186,6 +186,9 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
                     localStorage.setItem('projects', JSON.stringify(arr2));
                 }
                 homePage(section);
+                setTimeout(() => {
+                    makeDialog('Create Task', true, 'Add Task')
+                }, 500);
             break;
             // we dont even know what project to assign the tasks obj to
             // because we can change what project were on through tabs
@@ -233,6 +236,12 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt) {
 
     closeBtn.addEventListener('click', () => {
         dialog.close();
+        if (buttonId === "AddProject") {
+            // really just a temp solution until I get sum better
+            setTimeout(() => {
+                makeDialog('Create Task', true, 'Add Task')
+            }, 500);
+        }
     });
 
     fieldset.appendChild(legend);

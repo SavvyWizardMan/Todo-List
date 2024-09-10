@@ -9,7 +9,6 @@ import projectPage from "./projects";
 (function() {
     const container = document.querySelector('.container');
     const section = document.querySelector('section');
-    const buttons = document.querySelectorAll('li > button:not(#addProj)');
     const h1 = document.querySelector('h1');
     const addProj = document.querySelector('#addProj');
     const addBtn = document.querySelector('#add');
@@ -30,7 +29,6 @@ import projectPage from "./projects";
     addProj.addEventListener('click', () => {
         makeDialog('Create Project', false, 'Add Project');
         document.querySelector('dialog').showModal();
-        homePage(section);
     });
     /* 
         evil wizard 
@@ -94,26 +92,6 @@ import projectPage from "./projects";
 
         img.addEventListener('animationend', () => {
             img.style.animation = "";
-        });
-    });
-
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            document.querySelectorAll(`li:not(li:last-child)`).forEach(li => {
-                li.childNodes.forEach(child => {
-                    if (child.id === button.id) {
-                        li.style.borderTop = "2px inset black";
-                        li.style.borderLeft = "2px inset black";
-                        li.style.borderRight = "2px inset black";
-                        li.style.background = "#bbb";
-                        document.querySelector('li:first-child').style.borderTopLeftRadius = "8px";
-                    } else {
-                        li.style.border = "none";
-                        li.style.background = "none";
-                        li.style.borderBottom = "2px solid black";
-                    }
-                });
-            });
         });
     });
     
