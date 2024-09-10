@@ -403,6 +403,11 @@ input:valid, .correct {
     z-index: 3;
 }
 
+.wrapper:hover .flip .wrapper {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 .wrapper:hover .flip {
     z-index: 4;
     overflow-y: scroll;

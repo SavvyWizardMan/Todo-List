@@ -1,5 +1,5 @@
 import {createProject} from "./application";
-import {createTask} from "./application";
+import {createProjectTask} from "./application";
 import template from "./application";
 
 export default function(section, li) {
@@ -22,12 +22,12 @@ export default function(section, li) {
         const a = k.display();
         const h = a[0];
         const flipDiv = k.displayFlip();
-        for (let i = 0; i < localLength.length; i++) {
+        for (let j = 0; j < localLength.length; j++) {
             const q = JSON.parse(localStorage.getItem('projects'));
-            const e = q['project'+li.getAttribute('data-list')]['tasks']['task'+i] || [];
-            const o = new createTask(e.title, e.description, e.date, e.priority);
+            const e = q['project'+li.getAttribute('data-list')]['tasks']['task'+j] || [];
+            const o = new createProjectTask(e.title, e.description, e.date, e.priority);
             const c = o.display();
-            c.setAttribute('data-projTask', i);
+            c.setAttribute('data-projTask', j);
             flipDiv.appendChild(c);
         }
         h.firstChild.appendChild(flipDiv);

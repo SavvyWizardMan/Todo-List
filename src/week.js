@@ -14,6 +14,10 @@ export default function(section) {
                 const h = o.display();
                 h.setAttribute('data-task', i);
                 taskCon.appendChild(h);
+                if (e.taskDone) {
+                    document.querySelector('.task-box .inner').classList.toggle('complete');
+                    document.querySelector('.task-box .inner input[type="checkbox"]').checked = true;
+                }
             }
         }
         section.appendChild(taskCon);
