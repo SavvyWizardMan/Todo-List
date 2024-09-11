@@ -189,9 +189,6 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt, li="") {
                     makeDialog('Create Task', true, 'Add Task')
                 }, 500);
             break;
-            // we dont even know what project to assign the tasks obj to
-            // because we can change what project were on through tabs
-            // must be changed to accomodate this
             case "AddProjectTask":
                 if (JSON.parse(localStorage.getItem('projects')) !== null || JSON.parse(localStorage.getItem('projects')) !== undefined) {
                     arr2 = JSON.parse(localStorage.getItem('projects'));                    
@@ -202,7 +199,7 @@ export function makeDialog(h2Title, hasDueDate, buttonTxt, li="") {
                     localStorage.setItem('projects', JSON.stringify(arr2));
                 }
                 
-                projectPage(section, li);
+                projectPage(section, li, "", "");
             break;
             case "AddNote":
                 if (JSON.parse(localStorage.getItem('notes')) !== null) {
@@ -309,16 +306,18 @@ export function deleteProject(li) {
                 break;
             }
         }
-        if (list.length === 0) return;
+        const local = document.querySelectorAll('.projects li');
+        if (local === 0) return;
 
-        for (let j = index; j < list; j++) {
+        for (let j = index; j < local.length; j++) {
+            console.log(index);
             let ahead = j + 1;
             const o = arr['project'+ahead];
             if (o === null || o === undefined) break;
             arr['project'+j] = {"title": o.title, "description": o.description, tasks: o.tasks};
-            list[j].setAttribute('data-list', j);
+            local[j].setAttribute('data-list', j);
         }    
-        for (let h = list - 1; h < list; h++) {
+        for (let h = list.length - 1; h < list.length; h++) {
             delete arr['project'+h];
         }  
         localStorage.setItem('projects', JSON.stringify(arr));
@@ -353,174 +352,6 @@ export function deleteProjectThing(wrapper) {
         obj['project'+dataNum]['tasks'] = arr;
         localStorage.setItem('projects', JSON.stringify(obj));
 }
-
-export function editProjectThing(obj, theTitle, theDesc, theDate, thePriority, editButton, wrapper) {
-
-    //absolutely needs to be refactored
-    const diag = document.createElement('dialog');
-    diag.classList.add('editDiag');
-    document.querySelectorAll('dialog').forEach(dial => {
-        if (dial.className === 'editDiag') {
-            document.body.removeChild(dial);
-        }
-    });
-    const h2 = document.createElement('h2');
-    const form = document.querySelector('form');
-    const f = form.cloneNode();
-    const tLabel = document.querySelector('label[for="title"]');
-    const tl = tLabel.cloneNode();
-    const titleIn = document.querySelector('input[id="title"]');
-    const t = titleIn.cloneNode()
-    const descIn = document.querySelector('input[id="desc"]');
-    const dLabel = document.querySelector('label[for="desc"]');
-    const dl = dLabel.cloneNode();
-    const d = descIn.cloneNode();
-    const lastBtn = document.querySelector('form > button');
-    const l = lastBtn.cloneNode();
-    const button = document.querySelector('dialog > button');
-    const b = button.cloneNode(true);
-
-    h2.innerText = theTitle;
-    t.value = theTitle;
-    d.value = theDesc;
-    l.innerText = "Modify";
-    tl.innerText = "Title:";
-    dl.innerText = "Description:";
-
-    b.addEventListener('click', () => {
-        diag.close();
-    });
-
-    f.appendChild(tl);
-    f.appendChild(t);
-    f.appendChild(dl);
-    f.appendChild(d);
-    diag.appendChild(b);
-    diag.appendChild(h2);
-    diag.appendChild(f);
-        const dateIn = document.querySelector('input[id="date"]');
-        const daLabel = document.querySelector('label[for="date"]');
-        const dal = daLabel.cloneNode();
-        const da = dateIn.cloneNode();
-        const fieldset = document.querySelector('fieldset');
-        const fi = fieldset.cloneNode();
-        const legend = document.querySelector('legend');
-        const le = legend.cloneNode(true);
-        const hLabel = document.querySelector('label[for="high"]');
-        const hl = hLabel.cloneNode();
-        const radio1 = document.querySelector('input[value="high"]');
-        const r1 = radio1.cloneNode();
-        const mLabel = document.querySelector('label[for="medium"]');
-        const ml = mLabel.cloneNode();
-        const radio2 = document.querySelector('input[value="medium"]');
-        const r2 = radio2.cloneNode();
-        const lLabel = document.querySelector('label[for="low"]');
-        const ll = lLabel.cloneNode();
-        const radio3 = document.querySelector('input[value="low"]');
-        const r3 = radio3.cloneNode();
-
-        const priorityIn = [r1, r2, r3];
-        const inputs = [t, d, da];
-
-        da.value = theDate;
-        dal.innerText = "Due Date:";
-        hl.innerText = "High";
-        ml.innerText = "Medium";
-        ll.innerText = "Low";
-
-        for (let rad of priorityIn) {
-            if (thePriority === rad.value) {
-                fi.classList.add('correct');
-                rad.checked = true;
-            }
-        }
-
-        l.addEventListener('click', () => {
-            editButton.parentNode.querySelector('h3').innerText = t.value;
-            editButton.parentNode.querySelector('p').innerText = d.value;
-            editButton.parentNode.querySelector('p:nth-child(5)').innerText = da.value;
-            
-            for (let i of inputs) {
-                if (i.value === "") return;
-            }
-            
-            priorityIn.forEach(rad => {
-                if (rad.checked) {
-                    thePriority = rad.value;
-                    editButton.parentNode.querySelector('.inner > p:nth-child(6)').innerText = rad.value;
-                    const priorityP = document.querySelector('.inner > p:nth-child(6)');
-                    switch(rad.value) {
-                        case "high":
-                            priorityP.classList.add('high');
-                            priorityP.classList.remove('med');
-                            priorityP.classList.remove('low');
-                        break;
-                        case "medium":
-                            priorityP.classList.add('med');
-                            priorityP.classList.remove('low');
-                            priorityP.classList.remove('high');
-                        break;
-                        case "low":
-                            priorityP.classList.add('low');
-                            priorityP.classList.remove('med');
-                            priorityP.classList.remove('high');
-                        break;
-                    }
-                }
-            });
-
-            const arr = JSON.parse(localStorage.getItem(localName+"s"));
-            const len = Object.keys(JSON.parse(localStorage.getItem(localName+"s")));
-            for (let i = 0; i < len.length; i++) {
-                if (i === Number(wrapper.getAttribute(`data-${localName}`))) {
-                    arr[localName+i] = {"title": t.value, "description": d.value, "date": da.value, "priority": thePriority};
-                }
-            }
-        localStorage.setItem(localName+"s", JSON.stringify(arr));
-
-        // dis right here
-        obj.display();
-        diag.close();
-
-            
-        });
-        f.appendChild(dal);
-        f.appendChild(da);
-        fi.appendChild(hl);
-        fi.appendChild(r1);
-        fi.appendChild(ml);
-        fi.appendChild(r2);
-        fi.appendChild(ll);
-        fi.appendChild(r3);
-        fi.appendChild(le);
-        f.appendChild(fi);
-        f.appendChild(l);
-    
-    l.addEventListener('click', () => {
-        editButton.parentNode.querySelector('h3').innerText = t.value;
-        editButton.parentNode.querySelector('p').innerText = d.value;
-
-        for (let i of inputs) {
-            if (i.value === "") return;
-        }
-
-        const arr = JSON.parse(localStorage.getItem(localName+"s"));
-        const len = Object.keys(JSON.parse(localStorage.getItem(localName+"s")));
-        for (let i = 0; i < len.length; i++) {
-            if (i === Number(wrapper.getAttribute(`data-${localName}`))) {
-                arr[localName+i] = {"title": t.value, "description": d.value};
-            }
-        }
-        localStorage.setItem(localName+"s", JSON.stringify(arr));
-
-        // dis right here
-        obj.display();
-        diag.close();
-    });
-    f.appendChild(l);
-    document.body.appendChild(diag);
-    diag.showModal();
-};
 
 export function editThing(obj, theTitle, theDesc, theDate="", thePriority="", localName, editButton, wrapper) {
 
@@ -638,6 +469,16 @@ export function editThing(obj, theTitle, theDesc, theDate="", thePriority="", lo
                 }
             });
 
+            if (localName === 'projtask') {
+                const arr = JSON.parse(localStorage.getItem('projects'));
+                const len = Object.keys(JSON.parse(localStorage.getItem('projects'))['project'+wrapper.getAttribute(`data-${localName}`)]['tasks']);
+                for (let i = 0; i < len.length; i++) {
+                    if (i === Number(wrapper.getAttribute(`data-${localName}`))) {
+                        arr['project'+wrapper.getAttribute('data-projtask')]['tasks']['task'+i] = {"title": t.value, "description": d.value, "date": da.value, "priority": thePriority};
+                    }
+                }
+                localStorage.setItem("projects", JSON.stringify(arr));
+            } else {
             const arr = JSON.parse(localStorage.getItem(localName+"s"));
             const len = Object.keys(JSON.parse(localStorage.getItem(localName+"s")));
             for (let i = 0; i < len.length; i++) {
@@ -645,7 +486,8 @@ export function editThing(obj, theTitle, theDesc, theDate="", thePriority="", lo
                     arr[localName+i] = {"title": t.value, "description": d.value, "date": da.value, "priority": thePriority};
                 }
             }
-        localStorage.setItem(localName+"s", JSON.stringify(arr));
+            localStorage.setItem(localName+"s", JSON.stringify(arr));
+        }
 
         // dis right here
         obj.display();

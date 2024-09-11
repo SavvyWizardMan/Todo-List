@@ -247,7 +247,7 @@ export class createProjectTask {
         taskDone.addEventListener('change', () => {
             innerDiv.classList.toggle('complete');
             const arr = JSON.parse(localStorage.getItem('projects'));
-            arr['project'+wrapper.parentNode.parentNode.parentNode.getAttribute('data-project')]['tasks']['task'+wrapper.getAttribute('data-projTask')] = {"title": this.title, "description": this.description, "date": this.dueDate, "priority": this.priority, 'taskDone': taskDone.checked};
+            arr['project'+wrapper.getAttribute('data-projtask')]['tasks']['task'+wrapper.getAttribute('data-projTask')] = {"title": this.title, "description": this.description, "date": this.dueDate, "priority": this.priority, 'taskDone': taskDone.checked};
             localStorage.setItem('projects', JSON.stringify(arr));
         });
 
@@ -261,7 +261,7 @@ export class createProjectTask {
             if (con) deleteProjectThing(wrapper);
         });
 
-        editButton.addEventListener('click', () => editProjectThing(this, this.title, this.description, this.dueDate, this.priority, 'projTask', editButton, wrapper));
+        editButton.addEventListener('click', () => editThing(this, this.title, this.description, this.dueDate, this.priority, 'projtask', editButton, wrapper));
         
         div.appendChild(innerDiv);
         wrapper.appendChild(div);

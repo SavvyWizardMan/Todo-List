@@ -17,7 +17,7 @@ export default function(section) {
     li.style.borderRight = "2px inset black";
     li.style.background = "#bbb";
     document.querySelector('li:first-child').style.borderTopLeftRadius = "8px";
-    document.querySelectorAll('li:not(li:first-child, li:last-child').forEach(li => {
+    document.querySelectorAll('li:not(ul > li:first-child, ul > li:last-child').forEach(li => {
         li.style.border = "none";
         li.style.background = "none";
         li.style.borderBottom = "2px solid black";
