@@ -60,7 +60,7 @@ export default function(section) {
         const h = g[0];
         const lis = g[1];
         lis.setAttribute('data-list', i);
-        lis.querySelector('button').setAttribute('id', i+2);
+        lis.querySelector('button').setAttribute('id', i);
         let isThere = false;
         document.querySelectorAll('.projects > li').forEach(listI => {
             if (lis.getAttribute('data-list') === listI.getAttribute('data-list')) {

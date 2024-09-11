@@ -329,6 +329,12 @@ li > button {
     background: none;
     border: none;
     cursor: pointer;
+    width: fit-content;
+}
+
+.projectI {
+    position: absolute;
+    right: 0;
 }
 
 .icon > img {
@@ -388,6 +394,35 @@ input:valid, .correct {
     transition: all 0.5s;
 }
 
+.infoOpen {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 50%;
+    border: 2px solid black;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.infoDial {
+    overflow-y: scroll;
+}
+
+.infoDial > .close {
+    position: sticky;
+    top: 0;
+}
+
+.infoDial > p {
+    text-align: center;
+    padding: 48px;
+    margin: 0 auto;
+    word-break: break-word;
+}
+
+
 .theNoTask {
     transform: scaleX(-1);
 }
@@ -401,6 +436,10 @@ input:valid, .correct {
     transform: perspective(300px);
     transition: all 0.5s;
     z-index: 3;
+}
+
+.project-box .wrapper:hover {
+    z-index: 1;
 }
 
 .wrapper:hover .flip .wrapper {

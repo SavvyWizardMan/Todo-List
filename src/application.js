@@ -1,6 +1,9 @@
 import trash from "./trash.svg";
 import edit from "./notes.svg";
 import {deleteThing} from "./util";
+import {deleteProject} from "./util";
+import {deleteProjectThing} from "./util";
+// import {editProjectThing} from "./util";
 import {editThing} from "./util";
 import { makeDialog } from "./util";
 import homePage from "./home";
@@ -113,6 +116,10 @@ export class createProject {
     display() {
         const wrapper = document.createElement('div');
         const div = document.createElement('div');
+        const delButton = document.createElement('button');
+        const delImg = document.createElement('img');
+        const editButton = document.createElement('button')
+        const editImg = document.createElement('img');
         const descP = document.createElement('p');
         const li = document.createElement('li');
         const buttonLi = document.createElement('button');
@@ -125,6 +132,15 @@ export class createProject {
         titleP.innerText = this.title;
         buttonLi.innerText = this.title;
         descP.innerText = this.description;
+        delButton.classList.add('icon', 'projectI');
+        editButton.classList.add('icon', 'projectI');
+        delImg.src = trash;
+        delImg.alt = "Trash bin";
+        editImg.src = edit;
+        editImg.alt = "Sketch pad to edit";
+
+        delButton.appendChild(delImg);
+        editButton.appendChild(editImg);
 
         li.appendChild(buttonLi);
         innerDiv.appendChild(titleP);
@@ -134,7 +150,15 @@ export class createProject {
 
         buttonLi.addEventListener('click', () => {
             makeDialog("Create Project Task", true, "Add Project Task", li);
-            projectPage(document.querySelector('section'), li);
+            projectPage(document.querySelector('section'), li, editButton, delButton);
+        });
+
+        delButton.addEventListener('click', () => {
+            const con = confirm('are you sure you want to delete this project?');
+
+            if (con) {
+                deleteProject(li);
+            }
         });
 
         return [wrapper, li];
@@ -234,10 +258,10 @@ export class createProjectTask {
         delButton.addEventListener('click', () => {
             const con = confirm("Are you sure?");
 
-            if (con) deleteThing('projTask', wrapper);
+            if (con) deleteProjectThing(wrapper);
         });
 
-        editButton.addEventListener('click', () => editThing(this, this.title, this.description, this.dueDate, this.priority, 'projTask', editButton, wrapper));
+        editButton.addEventListener('click', () => editProjectThing(this, this.title, this.description, this.dueDate, this.priority, 'projTask', editButton, wrapper));
         
         div.appendChild(innerDiv);
         wrapper.appendChild(div);

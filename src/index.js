@@ -17,6 +17,9 @@ import projectPage from "./projects";
     const weekBtn = document.querySelector('#week');
     const notesBtn = document.querySelector('#notes');
     const img = document.querySelector('.wizard');
+    const infoOpen = document.querySelector('.infoOpen');
+    const infoDial = document.querySelector('.infoDial');
+    const closeBtn = document.querySelector('.infoDial .close');
     let deg = 45;
     const d = new Date();
     const dtoString = `${d.getFullYear()}-${d.getMonth() + 1 < 10 ? "0"+(d.getMonth() + 1) : d.getMonth() + 1}-${d.getDate() < 10 ? "0"+d.getDate() : d.getDate()}`;
@@ -29,6 +32,15 @@ import projectPage from "./projects";
     addProj.addEventListener('click', () => {
         makeDialog('Create Project', false, 'Add Project');
         document.querySelector('dialog').showModal();
+    });
+
+    infoOpen.addEventListener('click', () => {
+        infoDial.showModal();
+        infoDial.scrollTo(0, 0);
+    });
+
+    closeBtn.addEventListener('click', () => {
+        infoDial.close();
     });
     /* 
         evil wizard 

@@ -6,6 +6,7 @@
     <title>Todo-List</title>
 </head>
 <body>
+    <button class="infoOpen">i</button>
     <h1>Todo-List</h1>
     <img src="./wizardHITTINGDAT.jpg" class="wizard" width="700px" height="300px">
     <audio>
@@ -19,10 +20,7 @@
                     <li><button id="today">Today</button></li>
                     <li><button id="week">Week</button></li>
                     <li class="no-hover">Projects<button id="addProj">+</button></li>
-                    <div class="projects">
-                        <li><button id="0">Make a Todo-List</button></li>
-                        <li><button id="1">do some wizardry shtuff</button></li>
-                    </div>
+                    <div class="projects"></div>
                     <li><button id="notes">Notes</button></li>
                     <li><button id="add">+</button></li>
                 </ul>
@@ -30,6 +28,39 @@
         </aside>
         <section></section>
         <div class="func"></div>
+        <dialog class="infoDial">
+            <button class="close">X</button>
+            <p>
+                Hello, and welcome to my version of the Todo-List project for The Odin Project.
+                Some things about my project may be confusing, so I wish to clear that up and maybe
+                I'll make future changes to make it easier.
+            </p>
+            <p>
+                Sidenote when scrolling through a lengthy task and there are many tasks that add scroll to the
+                container: It is best to leave your mouse on the left side of the task, where all the text is, when
+                scrolling to actually scroll the div instead of the entire container.
+            </p>
+            <p>
+                To start, when you are on the homepage, you are creating tasks that are <strong>Independent</strong>
+                of a project. This means they are not associated with a project. You can also create tasks in the today
+                and week tabs, but for now, when creating tasks in either week or today pages, keep in mind that it will throw you back to the homePage.
+            </p>
+            <p>
+                If you want to create a project, youcan click the plus next to the list item "Projects" which will direct you to a 
+                dialog to fill out info about the project.
+            </p>
+            <p>
+                To create tasks <em>for</em> a project, click on the project in the list on the left that you wish to add a task
+                to, and click the plus at the bottom as if you were creating a task not related to a project.
+            </p>
+            <p>
+                Finally, to create notes, click on the "Notes" tab in the list and click the plus on the bottom of the list, which will
+                bring up a dialog for creating a note.
+            </p>
+            <p>
+                That's all. I hope this helps to some incase the structure of my UI is not laid out obviously. Hope you enjoy the use of my project!
+            </p>
+        </dialog>
     </div>
 </body>
 </html>

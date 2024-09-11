@@ -2,7 +2,7 @@ import {createProject} from "./application";
 import {createProjectTask} from "./application";
 import template from "./application";
 
-export default function(section, li) {
+export default function(section, li, editBtn, delBtn) {
     section.innerHTML = "";
     const projCon = document.createElement('div');
     const projH2 = document.createElement('h2');
@@ -35,5 +35,7 @@ export default function(section, li) {
     }
 
     section.appendChild(projH2);
+    section.appendChild(editBtn);
+    section.appendChild(delBtn);
     section.appendChild(projCon);
 }
