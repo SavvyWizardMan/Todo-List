@@ -531,6 +531,7 @@ export function editThing(obj, theTitle, theDesc, theDate="", thePriority="", lo
                     arr['project'+i] = {"title": t.value, "description": d.value, "tasks": arr['project'+i]['tasks']};
                 }
             } 
+            wrapper.querySelector('button').innerText = t.value;
             localStorage.setItem('projects', JSON.stringify(arr));
         } else {
             const arr = JSON.parse(localStorage.getItem(localName+"s"));
