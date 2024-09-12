@@ -422,7 +422,6 @@ input:valid, .correct {
     word-break: break-word;
 }
 
-
 .theNoTask {
     transform: scaleX(-1);
 }

@@ -326,7 +326,6 @@ export function deleteProject(li) {
 
 export function deleteProjectThing(wrapper) {
     const dataNum = wrapper.getAttribute('data-projtask');
-    console.log(dataNum);
     const local = Object.keys(JSON.parse(localStorage.getItem('projects'))['project'+dataNum]['tasks']).length;
     const obj = JSON.parse(localStorage.getItem('projects'));
     const arr = JSON.parse(localStorage.getItem('projects'))['project'+dataNum]['tasks'];
@@ -352,6 +351,7 @@ export function deleteProjectThing(wrapper) {
         }
         obj['project'+dataNum]['tasks'] = arr;
         localStorage.setItem('projects', JSON.stringify(obj));
+        homePage(document.querySelector('section'));
 }
 
 export function editThing(obj, theTitle, theDesc, theDate="", thePriority="", localName, editButton, wrapper) {

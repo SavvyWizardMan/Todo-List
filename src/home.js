@@ -72,6 +72,12 @@ export default function(section) {
         }
         h.setAttribute('data-project', i);
         const taskLen = Object.keys(e['tasks']);
+        if (taskLen.length === 0) {
+            const p = document.createElement('p');
+            p.innerText = "No project tasks!";
+            p.classList.add('theNoTask');
+            flipDiv.appendChild(p);
+        }
         for (let j = 0; j < taskLen.length; j++) {
             const q = JSON.parse(localStorage.getItem('projects'));
             const e = q['project'+lis.getAttribute('data-list')]['tasks']['task'+j] || [];
