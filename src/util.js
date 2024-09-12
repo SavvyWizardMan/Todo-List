@@ -325,7 +325,8 @@ export function deleteProject(li) {
     }
 
 export function deleteProjectThing(wrapper) {
-    const dataNum = wrapper.parentNode.parentNode.parentNode.getAttribute('data-project');
+    const dataNum = wrapper.getAttribute('data-projtask');
+    console.log(dataNum);
     const local = Object.keys(JSON.parse(localStorage.getItem('projects'))['project'+dataNum]['tasks']).length;
     const obj = JSON.parse(localStorage.getItem('projects'));
     const arr = JSON.parse(localStorage.getItem('projects'))['project'+dataNum]['tasks'];
@@ -521,14 +522,25 @@ export function editThing(obj, theTitle, theDesc, theDate="", thePriority="", lo
             if (i.value === "") return;
         }
 
-        const arr = JSON.parse(localStorage.getItem(localName+"s"));
-        const len = Object.keys(JSON.parse(localStorage.getItem(localName+"s")));
-        for (let i = 0; i < len.length; i++) {
-            if (i === Number(wrapper.getAttribute(`data-${localName}`))) {
-                arr[localName+i] = {"title": t.value, "description": d.value};
+        if (localName === 'project') {
+            const arr = JSON.parse(localStorage.getItem('projects'));
+            const len = Object.keys(JSON.parse(localStorage.getItem('projects')));
+            for (let i = 0; i < len; i++) {
+                if (i === Number(wrapper.getAttribute('data-list'))) {
+                    arr['project'+i] = {"title": t.value, "description": d.value, "tasks": arr['project'+i]['tasks']};
+                }
+            } 
+            localStorage.setItem('projects', JSON.stringify(arr));
+        } else {
+            const arr = JSON.parse(localStorage.getItem(localName+"s"));
+            const len = Object.keys(JSON.parse(localStorage.getItem(localName+"s")));
+            for (let i = 0; i < len.length; i++) {
+                if (i === Number(wrapper.getAttribute(`data-${localName}`))) {
+                    arr[localName+i] = {"title": t.value, "description": d.value};
+                }
             }
-        }
         localStorage.setItem(localName+"s", JSON.stringify(arr));
+        }
 
         // dis right here
         obj.display();

@@ -87,7 +87,7 @@ export class createTask {
             localStorage.setItem('tasks', JSON.stringify(arr));
         });
 
-        if ((new Date(this.dueDate).getTime() + (24 * 60 * 60 * 1000)) < new Date().getTime()) {
+        if ((new Date(this.dueDate).getTime() + (30 * 60 * 60 * 1000)) < new Date().getTime()) {
             innerDiv.classList.add('pastDue');
         }
 
@@ -159,6 +159,11 @@ export class createProject {
             if (con) {
                 deleteProject(li);
             }
+        });
+
+        editButton.addEventListener('click', () => {
+            console.log('clicked');
+            editThing(this, this.title, this.description, this.dueDate, this.priority, 'project', editButton, li);
         });
 
         return [wrapper, li];
@@ -251,7 +256,7 @@ export class createProjectTask {
             localStorage.setItem('projects', JSON.stringify(arr));
         });
 
-        if ((new Date(this.dueDate).getTime() + (24 * 60 * 60 * 1000)) < new Date().getTime()) {
+        if ((new Date(this.dueDate).getTime() + (30 * 60 * 60 * 1000)) < new Date().getTime()) {
             innerDiv.classList.add('pastDue');
         }
 
