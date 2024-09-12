@@ -163,7 +163,7 @@ export class createProject {
 
         editButton.addEventListener('click', () => {
             console.log('clicked');
-            editThing(this, this.title, this.description, this.dueDate, this.priority, 'project', editButton, li);
+            editThing(this, this.title, this.description, "", "", 'project', editButton, li);
         });
 
         return [wrapper, li];

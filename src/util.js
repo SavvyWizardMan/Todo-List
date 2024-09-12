@@ -523,9 +523,10 @@ export function editThing(obj, theTitle, theDesc, theDate="", thePriority="", lo
         }
 
         if (localName === 'project') {
+            console.log('ran?');
             const arr = JSON.parse(localStorage.getItem('projects'));
             const len = Object.keys(JSON.parse(localStorage.getItem('projects')));
-            for (let i = 0; i < len; i++) {
+            for (let i = 0; i < len.length; i++) {
                 if (i === Number(wrapper.getAttribute('data-list'))) {
                     arr['project'+i] = {"title": t.value, "description": d.value, "tasks": arr['project'+i]['tasks']};
                 }
