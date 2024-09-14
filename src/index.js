@@ -53,15 +53,32 @@ import { createNote } from "./application";
         other todos up by a step
     */
     // localStorage.setItem('task0', JSON.stringify({"title": "Wizard", "description": "I am a Wizard that is in your localStorage.", "date": dtoString, "priority": "high"}));
+    const tasks = {};
+    const projects = {};
+    const taskProjects = {};
+    const notes = {};
     if (localStorage.length === 0) {
         const wizard = new createTask('Wizard', 'I am a wizard in your localStorage', dtoString, 'high');
-        const wizard2 = new createTask('Another Wizard', 'I am also a wizard in your localStorage, but I\'m an evil wizard hahaha', '2024-9-28', 'low');
+        const wizard2 = new createTask('Another Wizard', 'I am also a wizard in your localStorage, but I\'m an evil wizard hahaha', '2024-09-27', 'low');
+        tasks['task0'] = wizard;
+        tasks['task1'] = wizard2;
         const project1 = new createProject('Reckoning', 'so the shadow government will reign supreme');
         const projTask1 = new createProjectTask('Step 1:', 'To hypnotize the government and POTUS', '2024-10-01', 'high');
         const projTask2 = new createProjectTask('Step 2:', 'Hold them hostage and seize control', '2024-10-12', 'medium');
         const projTask3 = new createProjectTask('Step 3: ', 'Create a better society full of wizards', '2024-11-23', 'high');
+        projects['project0'] = project1;
+        taskProjects['task0'] = projTask1;
+        taskProjects['task1'] = projTask2;
+        taskProjects['task2'] = projTask3;
+        projects['project0']['tasks'] = taskProjects;
         const note1 = new createNote('Cookies', 'Could Gardnarf grab some cookies before step 1?');
         const note2 = new createNote('Don\'t forget your robes', 'We already made that mistake once. DO NOT MAKE THAT MISTAKE AGAIN!');
+        notes['note0'] = note1;
+        notes['note1'] = note2;
+        console.log(JSON.stringify(tasks));
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        localStorage.setItem('projects', JSON.stringify(projects));
+        localStorage.setItem('notes', JSON.stringify(notes));
     }
     
     homePage(section);

@@ -10,10 +10,10 @@ import homePage from "./home";
 import projectPage from "./projects";
 
 export class createTask {
-    constructor(title, description, dueDate, priority){
+    constructor(title, description, date, priority){
         this.title = title;
         this.description = description;
-        this.dueDate = dueDate;
+        this.date = date;
         this.priority = priority;
     }
 
@@ -35,7 +35,7 @@ export class createTask {
         const editImg = document.createElement('img');
         titleP.innerText = this.title;
         descP.innerText = this.description;
-        dateP.innerText = this.dueDate;
+        dateP.innerText = this.date;
         priorityP.innerText = this.priority;
 
         switch(this.priority) {
@@ -83,11 +83,11 @@ export class createTask {
         taskDone.addEventListener('change', () => {
             innerDiv.classList.toggle('complete');
             const arr = JSON.parse(localStorage.getItem('tasks'));
-            arr['task'+wrapper.getAttribute('data-task')] = {"title": this.title, "description": this.description, "date": this.dueDate, "priority": this.priority, 'taskDone': taskDone.checked};
+            arr['task'+wrapper.getAttribute('data-task')] = {"title": this.title, "description": this.description, "date": this.date, "priority": this.priority, 'taskDone': taskDone.checked};
             localStorage.setItem('tasks', JSON.stringify(arr));
         });
 
-        if ((new Date(this.dueDate).getTime() + (30 * 60 * 60 * 1000)) < new Date().getTime()) {
+        if ((new Date(this.date).getTime() + (30 * 60 * 60 * 1000)) < new Date().getTime()) {
             innerDiv.classList.add('pastDue');
         }
 
@@ -97,7 +97,7 @@ export class createTask {
             if (con) deleteThing('task', wrapper);
         });
 
-        editButton.addEventListener('click', () => editThing(this, this.title, this.description, this.dueDate, this.priority, 'task', editButton, wrapper));
+        editButton.addEventListener('click', () => editThing(this, this.title, this.description, this.date, this.priority, 'task', editButton, wrapper));
         
         div.appendChild(innerDiv);
         wrapper.appendChild(div);
@@ -179,10 +179,10 @@ export class createProject {
 }
 
 export class createProjectTask {
-    constructor(title, description, dueDate, priority){
+    constructor(title, description, date, priority){
         this.title = title;
         this.description = description;
-        this.dueDate = dueDate;
+        this.date = date;
         this.priority = priority;
     }
 
@@ -204,7 +204,7 @@ export class createProjectTask {
         const editImg = document.createElement('img');
         titleP.innerText = this.title;
         descP.innerText = this.description;
-        dateP.innerText = this.dueDate;
+        dateP.innerText = this.date;
         priorityP.innerText = this.priority;
 
         switch(this.priority) {
@@ -252,11 +252,11 @@ export class createProjectTask {
         taskDone.addEventListener('change', () => {
             innerDiv.classList.toggle('complete');
             const arr = JSON.parse(localStorage.getItem('projects'));
-            arr['project'+wrapper.getAttribute('data-projtask')]['tasks']['task'+wrapper.getAttribute('data-projTask')] = {"title": this.title, "description": this.description, "date": this.dueDate, "priority": this.priority, 'taskDone': taskDone.checked};
+            arr['project'+wrapper.getAttribute('data-projtask')]['tasks']['task'+wrapper.getAttribute('data-projTask')] = {"title": this.title, "description": this.description, "date": this.date, "priority": this.priority, 'taskDone': taskDone.checked};
             localStorage.setItem('projects', JSON.stringify(arr));
         });
 
-        if ((new Date(this.dueDate).getTime() + (30 * 60 * 60 * 1000)) < new Date().getTime()) {
+        if ((new Date(this.date).getTime() + (30 * 60 * 60 * 1000)) < new Date().getTime()) {
             innerDiv.classList.add('pastDue');
         }
 
@@ -266,7 +266,7 @@ export class createProjectTask {
             if (con) deleteProjectThing(wrapper);
         });
 
-        editButton.addEventListener('click', () => editThing(this, this.title, this.description, this.dueDate, this.priority, 'projtask', editButton, wrapper));
+        editButton.addEventListener('click', () => editThing(this, this.title, this.description, this.date, this.priority, 'projtask', editButton, wrapper));
         
         div.appendChild(innerDiv);
         wrapper.appendChild(div);
