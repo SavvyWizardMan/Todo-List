@@ -5,6 +5,10 @@ import weekPage from "./week";
 import notesPage from "./notes";
 import {makeDialog} from "./util";
 import projectPage from "./projects";
+import {createTask} from "./application";
+import { createProject } from "./application";
+import { createProjectTask } from "./application";
+import { createNote } from "./application";
 
 (function() {
     const container = document.querySelector('.container');
@@ -49,6 +53,17 @@ import projectPage from "./projects";
         other todos up by a step
     */
     // localStorage.setItem('task0', JSON.stringify({"title": "Wizard", "description": "I am a Wizard that is in your localStorage.", "date": dtoString, "priority": "high"}));
+    if (localStorage.length === 0) {
+        const wizard = new createTask('Wizard', 'I am a wizard in your localStorage', dtoString, 'high');
+        const wizard2 = new createTask('Another Wizard', 'I am also a wizard in your localStorage, but I\'m an evil wizard hahaha', '2024-9-28', 'low');
+        const project1 = new createProject('Reckoning', 'so the shadow government will reign supreme');
+        const projTask1 = new createProjectTask('Step 1:', 'To hypnotize the government and POTUS', '2024-10-01', 'high');
+        const projTask2 = new createProjectTask('Step 2:', 'Hold them hostage and seize control', '2024-10-12', 'medium');
+        const projTask3 = new createProjectTask('Step 3: ', 'Create a better society full of wizards', '2024-11-23', 'high');
+        const note1 = new createNote('Cookies', 'Could Gardnarf grab some cookies before step 1?');
+        const note2 = new createNote('Don\'t forget your robes', 'We already made that mistake once. DO NOT MAKE THAT MISTAKE AGAIN!');
+    }
+    
     homePage(section);
 
     setInterval(() => {
