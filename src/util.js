@@ -287,7 +287,7 @@ export function deleteThing(localName, wrapper) {
             delete arr[localName+h];
         }
         localStorage.setItem(localName+"s", JSON.stringify(arr));
-        if (localName === "note") {
+        if (localName === "note" && document.querySelector('.task-box') === null) {
             notePage(document.querySelector('section'));
         } else {
             homePage(document.querySelector('section'));
